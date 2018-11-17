@@ -25,7 +25,7 @@ def minAddToMakeValid(self, S):
                 numOpen += 1
             elif bracket == ")" and numOpen != 0:
                 numOpen -= 1
-            elif bracket == ")":
+            else:
                 excessClosing += 1
         
         return excessClosing + numOpen
