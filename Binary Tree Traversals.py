@@ -1,7 +1,7 @@
 # Binary Tree Traversals (in-order, pre-order, post-order)
 
 class TreeNode:
-    def __init__(self, val, left, right):
+    def __init__(self, val):
         self.val = val
         self.left = None
         self.right = None
