@@ -18,16 +18,10 @@ S, find the minimal difference and place that difference in the array
 """
 
 def shortestToChar(S: "String", C: "character"):
-    distances = []
-    locations = []
-    for i in range(len(S)):
-        if S[i] == C:
-            locations.append(i)
-    for j in range(len(S)):
-        if S[j] == C:
-            distances.append(0)
-        else:
-            distances.append(minimalDifferences(j, locations))
+    
+    locations = [i for i in range(len(S)) if S[i] == C]
+    distances = [0 if S[j] == C else (minimalDifferences(j, locations)) for j in range(len(S))]
+
     return distances
 
 def minimalDifferences(index: "integer", l: "list of numbers"):
