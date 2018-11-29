@@ -19,22 +19,16 @@ class Solution:
         vals = []
         
         self.getMinDiffHelper(root, vals)
-        print(vals)
         
-        prevVal = vals.pop()
-        currVal = vals.pop()
-        minVal = abs(currVal - prevVal)
+        minVal = vals[1] - vals[0]
         
-        for i in range(len(vals)):
-            prevVal = currVal
-            currVal = vals.pop()
-            temp = abs(currVal - prevVal)
+        for i in range(2,len(vals)):
+            temp = vals[i] - vals[i-1]
             if temp < minVal:
                 minVal = temp
                 
         return minVal
-        
-        
+          
     def getMinDiffHelper(self, root, vals):
         
         if root == None:
