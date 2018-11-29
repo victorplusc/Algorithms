@@ -32,7 +32,7 @@ class Solution:
     def getMinDiffHelper(self, root, vals):
         
         if root == None:
-            return 0
+            return
         
         self.getMinDiffHelper(root.left, vals)
         vals.append(root.val)
