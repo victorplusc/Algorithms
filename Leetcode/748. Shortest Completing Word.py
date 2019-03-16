@@ -12,9 +12,7 @@ class Solution:
     def shortestCompletingWord(self, licensePlate: str, words: List[str]) -> str:
         licensePlate = licensePlate.lower()
         neededCharacters = {}
-        
-        print(licensePlate)
-        
+                
         for i in licensePlate:
             if i >= "a" and i <= "z":
                 if i not in neededCharacters:
@@ -37,16 +35,16 @@ class Solution:
                         temp[char] = 1
             
             try:
-                for count in neededCharacters[i]:
-                    if neededCharacters[count] >= temp[count]:
+                for count in neededCharacters:
+                    #print(count, neededCharacters[count])
+                    if neededCharacters[count] > temp[count]:
                         enough = False
                         
                 if enough == True and smallest == "":
                     smallest = word
                 if enough == True and len(smallest) > len(word):
                     smallest = word
-                    
             except:
                 pass
             
-        return word
+        return smallest
