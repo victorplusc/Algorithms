@@ -36,7 +36,6 @@ class Solution:
             
             try:
                 for count in neededCharacters:
-                    #print(count, neededCharacters[count])
                     if neededCharacters[count] > temp[count]:
                         enough = False
                         
