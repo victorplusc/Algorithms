@@ -41,3 +41,6 @@ class Solution(object):
                 uncommon.append(word)
         
         return uncommon
+
+# Time complexity: O(A + B)
+# Space complexity: O(A + B)
