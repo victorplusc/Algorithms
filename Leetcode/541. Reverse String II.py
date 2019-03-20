@@ -25,3 +25,6 @@ class Solution:
                 temp = []
 
         return "".join(newStr)
+
+# Time complexity: O(N)
+# Space complexity: O(N)
