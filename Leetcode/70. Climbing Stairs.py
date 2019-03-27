@@ -19,3 +19,23 @@ class Solution:
             first, second = second, curr
 
         return curr
+
+# Recursive with memoization:
+
+class Solution:
+    def climbStairs(self, n):
+        self.memo = {}
+        return self.helper(0, n)
+    
+    def helper(self, step, n):
+        if step > n:
+            return 0
+        if step == n:
+            return 1
+        
+        if step in self.memo:
+            return self.memo[step]
+        else:
+            self.memo[step] = self.helper(step + 1, n) + self.helper(step + 2, n)
+        
+        return self.memo[step]
