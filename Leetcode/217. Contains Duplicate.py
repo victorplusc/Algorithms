@@ -14,3 +14,6 @@ class Solution:
             seen.add(i)
         
         return False
+
+    #Time complexity: O(N)
+    #Space complexity: O(N)
