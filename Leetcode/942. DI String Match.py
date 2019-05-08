@@ -15,10 +15,7 @@ class Solution:
                 arr.append(vals[-1-right])
                 right += 1
         
-        if S[-1] == "I":
-            arr.append(vals[left])
-        else:
-            arr.append(vals[-1-right])
+        arr.append(vals[left])
         
         return arr
     
