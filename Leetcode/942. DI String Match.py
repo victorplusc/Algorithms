@@ -1,9 +1,7 @@
-# 942. DI String Match
-
 class Solution:
     def diStringMatch(self, S: str) -> List[int]:
         
-        vals = list(range(len(S)))
+        vals = list(range(len(S)+1))
         left = right = 0
         arr = []
         
@@ -17,7 +15,7 @@ class Solution:
                     left += 1
             if char == "D":
                 if arr == []:
-                    arr.append(vals[-1]+1)
+                    arr.append(vals[-1])
                     right += 1
                 else:
                     arr.append(vals[-1-right])
@@ -26,6 +24,9 @@ class Solution:
         if S[-1] == "I":
             arr.append(vals[left])
         else:
-            arr.append(vals[right])
+            arr.append(vals[-1-right])
         
         return arr
+    
+# Time complexity: O(N)
+# Space complexity: O(N)
