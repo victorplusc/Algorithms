@@ -10,4 +10,49 @@ Return the number of pawns the rook can capture in one move.
 # Space complexity: O
 class Solution:
     def numRookCaptures(self, board: List[List[str]]) -> int:
+        for row in board:
+            for i, char in enumerate(row):
+                if "R" == char:
+                    rook_row = row
+                    rook_col = i
+                    break
+        vertical_layout = []
+        for row in board:
+            vertical_layout.append(row[rook_col])
+        
+        total_captures = self.captures(vertical_layout) + self.captures(rook_row)
+        return total_captures
+        
+    def captures(self, row: List[List[str]]) -> int:
+        new_row = [char for char in row if char != "."]
+        print(new_row)
+        captures = 0
+        for i, char in enumerate(new_row):
+            if char == "p" and i<len(new_row) and new_row[i+1] == "R":
+                captures += 1
+            elif char == "R" and i<7 and new_row[i+1] == "p":
+                captures += 1
+        return captures
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
