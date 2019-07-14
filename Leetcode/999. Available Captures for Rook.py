@@ -6,8 +6,8 @@ The rook moves as in the rules of Chess: it chooses one of four cardinal directi
 Return the number of pawns the rook can capture in one move.
 """
 
-# Time complexity: O
-# Space complexity: O
+# Time complexity: O(N*M), where N is the number of rows, and M is the width of each row. If dimension are constant, then the time complexity does not scale and is therefore constant.
+# Space complexity: O(N*M)
 class Solution:
     def numRookCaptures(self, board: List[List[str]]) -> int:
         for row in board:
@@ -16,6 +16,7 @@ class Solution:
                     rook_row = row
                     rook_col = i
                     break
+                    
         vertical_layout = []
         for row in board:
             vertical_layout.append(row[rook_col])
@@ -25,34 +26,10 @@ class Solution:
         
     def captures(self, row: List[List[str]]) -> int:
         new_row = [char for char in row if char != "."]
-        print(new_row)
         captures = 0
         for i, char in enumerate(new_row):
-            if char == "p" and i<len(new_row) and new_row[i+1] == "R":
+            if char == "p" and i<len(new_row)-1 and new_row[i+1] == "R":
                 captures += 1
-            elif char == "R" and i<7 and new_row[i+1] == "p":
+            elif char == "R" and i<len(new_row)-1 and new_row[i+1] == "p":
                 captures += 1
         return captures
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
