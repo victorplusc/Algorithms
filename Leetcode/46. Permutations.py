@@ -13,14 +13,12 @@ class Solution:
     
     def recursive_helper(self, permutations, nums, current):
         if nums == []:
-            print(current)
             permutations.append(current)
         else:
             for i in range(len(nums)):
                 current_num = nums[i]
                 current.append(current_num)
                 nums.remove(current_num)
-                self.recursive_helper(permutations, nums, current)
+                self.recursive_helper(permutations, [i for i in nums], [j for j in current])
                 nums.insert(i, current_num)
                 current.remove(current_num)
-    
