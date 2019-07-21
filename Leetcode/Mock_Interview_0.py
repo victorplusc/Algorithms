@@ -19,13 +19,9 @@ class Solution:
     def isValidBST(self, root: TreeNode) -> bool:
         visits = []
         self.in_order_traversal(root, visits)
-        for i, x in enumerate(sorted(visits)):
-            if x != visits[i]:
+        for i in range(len(visits)-1):
+            if visits[i] > visits[i+1]:
                 return False
-            
-        if len(visits) != len({i for i in visits}):
-            return False
-        
         return True
         
     def in_order_traversal(self, root, visits):
