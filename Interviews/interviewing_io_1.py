@@ -1,3 +1,20 @@
+"""
+Given three rows of characters representing a keyboard and a word, by moving only once at a time to adjacent keys 
+{up, down, left, right}, record the key strokes required to fully spell out the word. An 'E' is entered at each 
+character of the given word to denote an 'Enter' stroke. You always begin your traversal from character 'A' on 
+the keyboard. The characters 'U', 'D', 'L', 'R' represents each direction you may move. Return the string that
+represents every movement required to spell out the given word.
+
+E.g.
+
+"BAT" -> "RELEDDE"
+
+Notes:
+> The directions you can go in are U, D, L, R and you have E for #enter. Any path is okay as long as it works.
+> You start at letter A and you try to spell out a word. 
+"""
+
+
 # A = [0][0]
 # B = [0][1]
 # i = {0..9}
@@ -18,12 +35,6 @@
 -> index 1 corresponds to {L, R}
 3) return as a string
 """
-
-#BAT -> RELEDDE
-        
-  
-#The directions you can go in are U, D, L, R and you have E for #enter. Any path is ok as long as it works
-#You start at letter A and you try to spell out a word. 
 
 # Time complexity: O(N)
 # Space complexity: O(N)
