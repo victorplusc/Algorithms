@@ -1,3 +1,3 @@
 # Algorithms
 
-```Solutions to Leetcode, Cracking the Coding Interview, and implementations of common algorithms!```
+```Solutions to Leetcode, Cracking the Coding Interview, Elements of Coding Interviews, and implementations of common algorithms!```
