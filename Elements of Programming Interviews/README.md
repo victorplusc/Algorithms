@@ -1,4 +1,5 @@
 Section II:
+```
 4) Primitive Types
 5) Arrays
 6) Strings
@@ -15,3 +16,4 @@ Section II:
 17) Greedy Algorithms and Invariants
 18) Graphs
 19) Parallel Computing
+```
