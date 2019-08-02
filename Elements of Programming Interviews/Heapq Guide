@@ -1,0 +1,22 @@
+"""
+Python Heap Library Guide
+_________________________
+
+heapq is designed as a min-heap, use min-heaps for counting k-largest elements. To use as a max-heap, multiply each node by (-1).
+
+h -> heapq
+L -> List
+k -> int
+e -> any
+
+import heapq
+
+heapq.heapify(L), transforms the elements in L into a heap in-place
+heapq.nlargest(k, L) returns the k largest elements in L
+heapq.nsmallest(k, L) returns the k smallest elements in L
+heapq.heappush(h, e), pushes a new element on the heap
+heapq.heappop(h), which pops the smallest element from the heap
+heapq.heappushpop(h, e), which pushes e on the heap and pops and returns the smallest element
+e = h[0], which returns the smallest element on tthe heap without popping it
+
+"""
