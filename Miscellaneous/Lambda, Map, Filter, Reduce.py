@@ -45,3 +45,17 @@ print(next(mapped))
 
 # prints ['32', '053'], is an iterator, so when it is incremented, previous indices are not saved
 print(list(mapped))
+
+"""
+Filter function:
+
+a) Takes as input:
+    1) expression
+    2) iterable
+    
+b) returns an iterator object where the expression is True
+"""
+
+array = [1,2,5,4,3,7,39,3,6,8,9,4,9,4,87,53,1]
+filtered = filter(lambda x : x > 10, array)
+print(list(filtered))
