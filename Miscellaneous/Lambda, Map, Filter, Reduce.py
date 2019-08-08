@@ -45,10 +45,9 @@ O: f(1), f(2), f(3)
 """
 
 mapped = map(lambda val: str(val[1]) + str(val[0]), [(1,2), (2,3), (53,0)])
-print(next(mapped))
 
-# prints ['32', '053'], is an iterator, so when it is incremented, previous indices are not saved
-print(list(mapped))
+print(next(mapped))
+print(list(mapped)) # prints ['32', '053'], is an iterator, so when it is incremented, previous indices are not saved
 
 """
 =========================================================================================
@@ -64,12 +63,31 @@ b) returns an iterator object where the function is True
 
 array = [1,2,5,4,3,7,39,3,6,8,9,4,9,4,87,53,1]
 filtered = filter(lambda x : x > 10, array)
-
-# returns [39, 87, 53]
-print(list(filtered))
+print(list(filtered)) # returns [39, 87, 53]
 
 array = [0, 0, 1, 1, 0, 1]
 filtered = filter(None, array)
+print(list(filtered)) # returns [1, 1, 1]
 
-# returns [1, 1, 1]
-print(list(filtered))
+"""
+Reduce function:
+
+a) Takes as input:
+    1) function
+    2) iterable
+
+b)
+    1) val_1 = f(A[0], A[1])
+    2) val_2 = f(val_1, A[2])
+    3) val_3 = f(val_2, A[3])
+    ...
+    n-1) val_n = f(val_n-1, A[-1])
+
+"""
+
+array = [x*x for x in range(5)]
+sum_odd = lambda x, y: x+y if y%2 != 0 else x*1
+y = functools.reduce(sum_odd, array)
+
+print(array) # [0, 1, 4, 9, 16]
+print(y)     # 10
