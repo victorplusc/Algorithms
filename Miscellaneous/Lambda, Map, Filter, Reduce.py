@@ -58,4 +58,12 @@ b) returns an iterator object where the expression is True
 
 array = [1,2,5,4,3,7,39,3,6,8,9,4,9,4,87,53,1]
 filtered = filter(lambda x : x > 10, array)
+
+# returns [39, 87, 53]
+print(list(filtered))
+
+array = [0, 0, 1, 1, 0, 1]
+filtered = filter(None, array)
+
+# returns [1, 1, 1]
 print(list(filtered))
