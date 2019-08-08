@@ -56,10 +56,10 @@ Filter function:
 =========================================================================================
 
 a) Takes as input:
-    1) expression
+    1) function
     2) iterable
     
-b) returns an iterator object where the expression is True
+b) returns an iterator object where the function is True
 """
 
 array = [1,2,5,4,3,7,39,3,6,8,9,4,9,4,87,53,1]
