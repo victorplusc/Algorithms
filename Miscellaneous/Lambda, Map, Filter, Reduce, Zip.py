@@ -70,7 +70,9 @@ filtered = filter(None, array)
 print(list(filtered)) # returns [1, 1, 1]
 
 """
+=========================================================================================
 Reduce function:
+=========================================================================================
 
 a) Takes as input:
     1) function
@@ -91,3 +93,33 @@ y = functools.reduce(sum_odd, array)
 
 print(array) # [0, 1, 4, 9, 16]
 print(y)     # 10
+
+
+"""
+=========================================================================================
+Zip function:
+=========================================================================================
+
+a) Takes as input:
+    1) iterable
+    2) iterable
+    ...
+    n) iterable
+    
+b) returns an iterable with all elements in the same order joined together, up until the smallest iterable is depleted.
+
+e.g.
+
+zip([1,2,3,4], ("a", "b", "c"), [50, 100, 150, 200, 250])
+>>> iterable((1,"a",50), (2, "b", 100), (3, "c", 150))
+
+Note:
+- if no parameters are passed, zip() returns an empty iterator.
+- if a single iterable is passed, returns an iterator of 1-tuples
+"""
+
+zipped = zip([1,2,3,4], ("a", "b", "c"), [50, 100, 150, 200, 250])
+print(list(zipped)) #[(1, 'a', 50), (2, 'b', 100), (3, 'c', 150)]
+print(list(zip())) #[]
+print(list(zip([1,2,3]))) #[(1,), (2,), (3,)]
+print(len((1,))) #prints 1
