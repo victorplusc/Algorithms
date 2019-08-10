@@ -1,9 +1,9 @@
 """
-653. Two Sum IV - Input is a BST
-Given a Binary Search Tree and a target number, return true if there exist two elements in the BST such that their sum is equal to the given target.
-"""
+617. Merge Two Binary Trees
+Given two binary trees and imagine that when you put one of them to cover the other, some nodes of the two trees are overlapped while the others are not.
 
-## Incomplete!
+You need to merge them into a new binary tree. The merge rule is that if two nodes overlap, then sum node values up as the new value of the merged node. Otherwise, the NOT null node will be used as the node of new tree.
+"""
 
 # Definition for a binary tree node.
 # class TreeNode:
@@ -12,28 +12,25 @@ Given a Binary Search Tree and a target number, return true if there exist two e
 #         self.left = None
 #         self.right = None
 
+# Time complexity: O(M), where M is the total number of nodes of the full tree
+# Space complexity: O(M), where M is the height is the tallest tree, O(M) when it is skewed, in the average case, it will be O(log M)
+
 class Solution:
-    def findTarget(self, root: TreeNode, k: int) -> bool:
-        return self.in_order_traversal(root, root, k, False)
-        
-    def in_order_traversal(self, tree, node, k, valid):
-        if node:
-            self.in_order_traversal(tree, node.left, k, valid)
-            res = self.find_complement(tree, node, k-node.val)
-            if res: valid = True
-            self.in_order_traversal(tree, node.right, k, valid)
-            return res or valid
-            
-    def find_complement(self, tree, current, n):
-        if tree:
-            if n == tree.val and tree != current:
-                return True
-            elif tree.right and n > tree.val:
-                return self.find_complement(tree.right, current, n)
-            elif n < tree.val and tree.left:
-                return self.find_complement(tree.left, current, n)
-            else:
-                return False
-            
-            
-            
+    def mergeTrees(self, t1, t2):
+        """
+        :type t1: TreeNode
+        :type t2: TreeNode
+        :rtype: TreeNode
+        """
+        return self.merge_helper(t1, t2)
+    
+    def merge_helper(self, t1, t2):
+        if t1 and t2:
+            node = TreeNode(t1.val + t2.val)
+            node.left = self.merge_helper(t1.left, t2.left)
+            node.right = self.merge_helper(t1.right, t2.right)
+            return node
+        elif t1:
+            return t1
+        else:
+            return t2
