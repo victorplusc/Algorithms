@@ -91,7 +91,6 @@ def process_in_order(operations: [tuple]) -> [int]:
         processed_operations.append(position_indices[i])
     
     return processed_operations
-    
             
 # For example, if I receive
 # [{ GET, "a" }, { POST, "ab" }, { POST, "abb"} ,{ PUT, "abc" }]
@@ -100,6 +99,5 @@ def process_in_order(operations: [tuple]) -> [int]:
             
 def process_operation(operation):
     return len(operation[1])
-            
            
 print(process_in_order([("GET", "a"), ("POST", "ab"), ("DELETE", "abba"), ("POST", "abb"), ("PUT", "abc")]))
