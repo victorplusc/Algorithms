@@ -56,14 +56,10 @@ def process_in_order(operations: [tuple]) -> [int]:
     post_list = []
     put_list = []
     get_list = []
-    positions = position_indices = {}
-    
-    """
-    [ positions[processed_operations[1]], ...
-    """
+    positions = {}
+    processed_operations = [None for i in range(len(operations))]
     
     for i, op in enumerate(operations):
-        position_indices[i] = op
         positions[op] = i
         
         if "DELETE" in op:
@@ -75,20 +71,9 @@ def process_in_order(operations: [tuple]) -> [int]:
         else:
             get_list.append(op)
     
-    # processed_operations = []
-    
     for op_list in [delete_list, post_list, put_list, get_list]:
         for op in (op_list):
-            position_indices[positions[op]] = process_operation(op)
-            #processed_operations.append((positions[op], process_operation(op)))
-            
-    #processed_operations.sort()
-    
-    #return [op[1] for op in processed_operations]
-    
-    processed_operations = []
-    for i in range(len(operations)):
-        processed_operations.append(position_indices[i])
+            processed_operations[positions[op]] = process_operation(op)
     
     return processed_operations
             
