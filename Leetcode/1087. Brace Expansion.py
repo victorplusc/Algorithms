@@ -15,7 +15,7 @@ class Solution:
         dfs(s, 0, [], results)
         return results
     
-def dfs(s: str, index: int, curr: [], results: List[int]):
+def dfs(s: str, index: int, curr: List[str], results: List[int]):
     if index == len(s):
         results.append("".join(curr))
         return
