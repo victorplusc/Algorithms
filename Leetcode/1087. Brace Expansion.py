@@ -34,6 +34,7 @@ def dfs(s: str, index: int, curr: List[str], results: List[int]):
         for x in char_list:
             curr.append(x)
             dfs(s, end_index + 1, [_ for _ in curr], results)
+            del curr[-1]
         
     elif c not in {",", "}"}:
         curr.append(c)
