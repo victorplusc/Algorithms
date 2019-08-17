@@ -26,9 +26,11 @@ class Solution:
         start = 0
         
         for end in range(len(s)):
-            if end == len(s)-1 or s[end] == " ":
+            if s[end] == " ":
                 self.reverse_word(s, start, end - 1)
                 start = end + 1
+            elif end == len(s)-1:
+                self.reverse_word(s, start, end)
                 
         
     def reverse_word(self, s, start, end):
@@ -36,3 +38,6 @@ class Solution:
             s[start], s[end] = s[end], s[start]
             start += 1
             end -= 1
+        
+        
+        
