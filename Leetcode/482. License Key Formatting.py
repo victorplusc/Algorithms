@@ -20,6 +20,29 @@ Output: "2-5G-3J"
 Explanation: The string S has been split into three parts, each part has 2 characters except the first part as it could be shorter as mentioned above.
 """
 
+# Time complexity: O(N)
+# Space complexity: O(N)
+
 class Solution:
-    def licenseKeyFormatting(self, S: str, K: int) -> str:
+    def licenseKeyFormatting(self, s: str, k: int) -> str:
+        s = s.upper()
+        license_key = []
+        temp = []
+        curr = 0
+        for i in range(len(s)):
+            if s[-1-i] != "-":
+                temp.append(s[-1-i])
+                curr += 1
+            if curr == k:
+                temp.reverse()
+                license_key.append("".join(temp))
+                temp = []
+                curr = 0
+
+        if temp:
+            temp.reverse()
+            license_key.append("".join(temp))
+            
+        license_key.reverse()
         
+        return "-".join(license_key)
