@@ -22,7 +22,7 @@ Input:
 Output: [1,2,3,4,8,12,11,10,9,5,6,7]
 """
 
-# Time complexity: O(N)
+# Time complexity: O(M*N)
 # Space complexity: O(1), no additional space required
 
 class Solution:
