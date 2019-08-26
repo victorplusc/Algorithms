@@ -21,17 +21,18 @@ Input: [3,9,20,null,null,15,7]
 class Solution:
     def verticalOrder(self, root: TreeNode) -> List[List[int]]:
         d = {}
-        self.vertical_helper(root, 0, d)
-        output = []
-        for i in sorted([_ for _ in d]):
-            output.append(d[i])
-        return output
+        self.bfs(root, d)
+        return [d[i] for i in sorted(d)]
     
-    def vertical_helper(self, root, position, d):
-        if root:
-            self.vertical_helper(root.left, position-1, d)
-            if position in d:
-                d[position].append(root.val)
-            else:
-                d[position] = [root.val]
-            self.vertical_helper(root.right, position+1, d)
+    def bfs(self, root, d):
+        queue = [(root, 0)]
+        position = 0
+        while queue:
+            front, position = queue.pop()
+            if front:
+                queue.insert(0, (front.left, position-1))
+                queue.insert(0, (front.right, position+1))
+                if position in d:
+                    d[position].append(front.val)
+                else:
+                    d[position] = [front.val]
