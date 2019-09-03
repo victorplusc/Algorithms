@@ -50,16 +50,14 @@ class Solution:
                         top = stack[-1]
                         if asteroid*top > 0:
                             stack.append(asteroid)
-                            break
-                        if abs(top) == abs(asteroid):
+                        elif abs(top) == abs(asteroid):
                             stack.pop()
-                            break
                         elif abs(top) < abs(asteroid):
                             stack.pop()
                             if not stack:
                                 stack.append(asteroid)
                                 break
-                        elif abs(top) > abs(asteroid):
-                            break
+                            continue
+                        break
                     
         return stack
