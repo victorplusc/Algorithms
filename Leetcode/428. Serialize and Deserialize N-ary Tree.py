@@ -35,6 +35,8 @@ class Codec:
             for node in root.children:
                 self.serialize_helper(node, serialized)
                 serialized.append("/") 
+        else:
+            serialized.append("X")
         
         
     def deserialize(self, data):
@@ -49,7 +51,7 @@ class Codec:
     
     def deserialize_helper(self, deserialized):
         if deserialized:
-            if not deserialized[0]:
+            if deserialized[0] == "X":
                 deserialized.pop(0)
                 return None
             
