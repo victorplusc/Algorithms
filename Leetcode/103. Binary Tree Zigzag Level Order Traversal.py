@@ -13,20 +13,23 @@ Given binary tree [3,9,20,null,null,15,7],
 #         self.left = None
 #         self.right = None
 
+import collections
+
 class Solution:
     def zigzagLevelOrder(self, root: TreeNode) -> List[List[int]]:
         zigzag = []
-        queue = [root]
+        deque = collections.deque()
+        deque.append(root)
         traversals = 0
-        while queue:
-            layer_size = len(queue)
+        while deque:
+            layer_size = len(deque)
             layer = []
             for i in range(layer_size):
-                front = queue.pop()
+                front = deque.pop()
                 if front:
                     layer.append(front.val)
-                    queue.insert(0, front.left)
-                    queue.insert(0, front.right)
+                    deque.appendleft(front.left)
+                    deque.appendleft(front.right)
             if traversals % 2 != 0:
                 layer.reverse()
             traversals += 1
@@ -34,3 +37,14 @@ class Solution:
                 zigzag.append(layer)
         
         return zigzag
+            
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
