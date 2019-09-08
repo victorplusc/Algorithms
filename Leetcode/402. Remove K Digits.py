@@ -22,6 +22,8 @@ Output: "0"
 Explanation: Remove all the digits from the number and it is left with nothing which is 0.
 """
 
+import collections
+
 # Time complexity: O(N)
 # Space complexity: O(N)
 class Solution:
@@ -29,26 +31,24 @@ class Solution:
         if k == len(num):
             return "0"
         
-        stack = []
+        deque = collections.deque()
+        
         i = 0
         while i < len(num):
-            while k > 0 and stack and stack[-1] > num[i]:
-                stack.pop()
+            while k > 0 and deque and deque[-1] > num[i]:
+                deque.pop()
                 k -= 1
-            stack.append(num[i])
+            deque.append(num[i])
             i += 1
-        
-        
+
         # takes care of edge cases where all numbers are the same
         while k > 0:
-            stack.pop()
+            deque.pop()
             k -= 1
         
         # remove leading "0"s
-        stack.reverse()
-        while stack and stack[-1] == "0":
-            stack.pop()
-        stack.reverse()
+        while deque and deque[0] == "0":
+            deque.popleft()
         
         # the last element could be "" if there was only a 0 in the new string
-        return "".join(stack) or "0"
+        return "".join(list(deque)) or "0"
