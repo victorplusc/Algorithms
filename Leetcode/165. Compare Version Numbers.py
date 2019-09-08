@@ -16,18 +16,16 @@ You may assume the default revision number for each level of a version number to
 # Space complexity: O(max(N, M))
 class Solution:
     def compareVersion(self, version1: str, version2: str) -> int:
-        
         v1_list = [int(i) for i in version1.split(".")]
         v2_list = [int(i) for i in version2.split(".")]
         v1_len = len(v1_list)
         v2_len = len(v2_list)
         
-        if v1_len < v2_len:
-            for _ in range(v2_len-v1_len):
-                v1_list.append(0)
-        elif v1_len > v2_len:
-            for _ in range(v1_len-v2_len):
-                v2_list.append(0)
+        longer_list = v1_list if v1_len > v2_len else v2_list
+        shorter_list = v2_list if v1_len > v2_len else v1_list
+        
+        for _ in range(len(longer_list)-len(shorter_list)):
+            shorter_list.append(0)
         
         for i in range(len(v1_list)):
             if v1_list[i] > v2_list[i]:
