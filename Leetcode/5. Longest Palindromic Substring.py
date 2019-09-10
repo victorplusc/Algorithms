@@ -24,11 +24,11 @@ class Solution:
             len1 = self.expand_around_center(s, i, i)
             len2 = self.expand_around_center(s, i, i+1)
             max_len = max(len1, len2)
-            if max_len > (end-start):
-                start = i - (max_len -1)//2
-                end = i + max_len//2
-    
-        return s[start:end+1]
+            if max_len > end-start:
+                start = i - (max_len-1)//2
+                end = i + 1 + max_len//2
+
+        return s[start:end]
     
     def expand_around_center(self, s, L, R):
         while L >= 0 and R < len(s) and s[L] == s[R]:
