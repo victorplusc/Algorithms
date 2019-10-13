@@ -19,9 +19,9 @@ The length of pairs will not exceed 2000.
 The length of each pairs[i] will be 2.
 The length of each words[i] and pairs[i][j] will be in the range [1, 20].
 """
-# Time complexity: O(N)
-# Space complexity: O(N)
 
+# Time complexity: O(N+P)
+# Space complexity: O(P)
 class Solution:
     def areSentencesSimilar(self, words1: [str], words2: [str], pairs: [[str]]) -> bool:
         if len(words1) != len(words2):
