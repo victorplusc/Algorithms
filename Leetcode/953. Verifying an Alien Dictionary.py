@@ -4,8 +4,6 @@ In an alien language, surprisingly they also use english lowercase letters, but 
 
 Given a sequence of words written in the alien language, and the order of the alphabet, return true if and only if the given words are sorted lexicographicaly in this alien language.
 
- 
-
 Example 1:
 
 Input: words = ["hello","leetcode"], order = "hlabcdefgijkmnopqrstuvwxyz"
@@ -21,7 +19,6 @@ Example 3:
 Input: words = ["apple","app"], order = "abcdefghijklmnopqrstuvwxyz"
 Output: false
 Explanation: The first three characters "app" match, and the second string is shorter (in size.) According to lexicographical rules "apple" > "app", because 'l' > '∅', where '∅' is defined as the blank character which is less than any other character (More info).
- 
 
 Note:
 
@@ -30,6 +27,26 @@ Note:
 order.length == 26
 All characters in words[i] and order are english lowercase letters.
 """
+# Time complexity: O(N*k), where N is the length of the input array, and k is the length of each word.
+# Space complexity: O(1)
 class Solution:
     def isAlienSorted(self, words: List[str], order: str) -> bool:
+        dictionary = {c:i for i, c in enumerate(order)}
         
+        for i in range(len(words)-1):
+            word1 = words[i]
+            word2 = words[i+1]
+            diff = False
+            
+            for k in range(min(len(word1), len(word2))):
+                if word1[k] != word2[k]:
+                    if dictionary[word1[k]] > dictionary[word2[k]]:
+                        return False
+                    diff = True
+                    break
+                    
+            if not diff:
+                if len(word1) > len(word2):
+                    return False
+                
+        return True
