@@ -16,10 +16,23 @@ Note:
 cost will have a length in the range [2, 1000].
 Every cost[i] will be an integer in the range [0, 999].
 """
+# Time complexity: O(N)
+# Space complexity: O(1)
 class Solution(object):
     def minCostClimbingStairs(self, cost):
         """
         :type cost: List[int]
         :rtype: int
         """
+        if len(cost) == 1:
+            return 0
         
+        f1 = cost[0]
+        f2 = cost[1]
+        
+        for i in range(2,len(cost)):
+            curr = cost[i] + min(f1, f2)
+            f1 = f2
+            f2 = curr
+        
+        return min(f1, f2)
