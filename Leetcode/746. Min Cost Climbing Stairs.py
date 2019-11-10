@@ -27,12 +27,12 @@ class Solution(object):
         if len(cost) == 1:
             return 0
         
-        f1 = cost[0]
-        f2 = cost[1]
+        two_behind = cost[0]
+        one_behind = cost[1]
         
         for i in range(2,len(cost)):
-            curr = cost[i] + min(f1, f2)
-            f1 = f2
-            f2 = curr
+            curr = cost[i] + min(one_behind, two_behind)
+            two_behind = one_behind
+            one_behind = curr
         
-        return min(f1, f2)
+        return min(one_behind, two_behind)
