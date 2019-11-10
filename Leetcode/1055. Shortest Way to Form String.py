@@ -26,4 +26,51 @@ Constraints:
   - The lengths of source and target string are between 1 and 1000.
 """
 class Solution:
-    def shortestWay(self, source: str, target: str) -> int:
+    # Time complexity: O(N*M)
+    # Space complexity: O(1)
+    def shortestWay(self, src: str, tar: str) -> int:
+        count = 0
+        i = 0
+        while i < len(tar):
+            curr_i = i
+            for j in range(len(src)):
+                if i < len(tar) and src[j] == tar[i]:
+                    i += 1
+            if i == curr_i:
+                return -1
+            count += 1
+        return count
+    
+    # Time complexity: O(log(N)*M), where N is len(s)
+    # Space complexity: O(N)
+    import collections
+    def shortestWay(self, s: str, t: str) -> int:
+        d = collections.defaultdict(list)
+        for i, c in enumerate(s):
+            d[c].append(i)
+        
+        idx = 0
+        count = 1
+        for c in t:
+            if c not in d:
+                return -1
+            else:
+                temp = d[c]
+                if temp[-1] < idx:
+                    count += 1
+                    idx = 0
+                idx = self.binarysearch(temp, idx)
+                
+        return count
+                    
+    def binarysearch(self, A, idx):
+        lo = 0
+        hi = len(A)-1
+        while lo < hi:
+            mid = (lo+hi)//2
+            if A[mid] < idx:
+                lo = mid+1
+            else:
+                hi = mid
+    
+        return A[lo]+1
