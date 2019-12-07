@@ -37,7 +37,19 @@ Return false.
 #         self.val = x
 #         self.left = None
 #         self.right = None
-
+# Time complexity: O(N*M)
+# Space complexity: O(N), max recursion in s
 class Solution:
     def isSubtree(self, s: TreeNode, t: TreeNode) -> bool:
+        return self.traverse(s, t)
+    
+    def equals(self, x, y):
+        if not (x and y):
+            return x is y
+        return x.val == y.val and self.equals(x.left, y.left) and self.equals(x.right, y.right)
+    
+    def traverse(self, s, t):
+        if not s:
+            return False
+        return self.equals(s, t) or self.traverse(s.left, t) or self.traverse(s.right, t)
         
