@@ -55,7 +55,6 @@ class Solution:
         
         cycles = 0
         while rotten_locations:
-            cycles += 1
             size = len(rotten_locations)
             for i in range(size):
                 curr = rotten_locations.popleft()
@@ -69,10 +68,11 @@ class Solution:
 
                     grid[r][c] = 2
                     rotten_locations.append([r, c])
-                    fresh_oranges -= 1  
-            
+                    fresh_oranges -= 1
+
+            cycles += 1
             if fresh_oranges == 0:
                 return cycles
 
-        return -1     
+        return -1   
             
