@@ -64,7 +64,7 @@ class Solution:
                 for dy, dx in directions:
                     r = y + dy
                     c = x + dx
-                    if r < 0 or x < 0 or r >= m or c >= n or grid[r][c] == 0 or grid[r][c] == 2:
+                    if r < 0 or c < 0 or r >= m or c >= n or grid[r][c] == 0 or grid[r][c] == 2:
                         continue
 
                     grid[r][c] = 2
