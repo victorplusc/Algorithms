@@ -52,9 +52,9 @@ class Solution:
             point = queue.popleft()
             x = point[1]
             y = point[0]
-            for direction in directions:
-                r = y + direction[0]
-                c = x + direction[1]
+            for y_delta, x_delta in directions:
+                r = y + y_delta
+                c = x + x_delta
                 if r < 0 or c < 0 or r >= m or c >= n or rooms[r][c] != EMPTY:
                     continue
                 rooms[r][c] = rooms[y][x] + 1
