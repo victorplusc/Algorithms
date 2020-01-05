@@ -48,14 +48,12 @@ class Solution:
     def findJudge(self, N: int, trust: List[List[int]]) -> int:
         if not trust: return 1
         
-        trusted_by = defaultdict(set)
-        trusts = defaultdict(set)
-        
+        trusts = [0 for i in range(N+1)]
         for p, q in trust:
-            trusts[p].add(q)
-            trusted_by[q].add(p)
+            trusts[p] -= 1
+            trusts[q] += 1
             
-        for person in trusted_by:
-            if len(trusted_by[person]) == N-1 and not trusts[person]:
-                return person
+        for i, v in enumerate(trusts):
+            if v == N-1:
+                return i
         return -1
