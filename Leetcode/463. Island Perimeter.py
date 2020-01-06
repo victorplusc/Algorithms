@@ -29,18 +29,19 @@ class Solution:
         perimeter = 0
         for y, row in enumerate(grid):
             for x, val in enumerate(row):
-                perimeter += 4 - self.surrounding_land(grid, x, y, m, n)
+                if val == 1:
+                    perimeter += self.surrounding_perimeter(grid, x, y, m, n)
         return perimeter
                 
         
-    def surrounding_land(self, grid, x, y, m, n):
-        land = 0
-        if x != 0 and grid[y][x-1] == 1:
-            land += 1
-        if x != m-1 and grid[y][x+1] == 1:
-            land += 1
-        if y != 0 and grid[y-1][x] == 1:
-            land += 1
-        if y != n-1 and grid[y+1][x] == 1:
-            land += 1
-        return land
+    def surrounding_perimeter(self, grid, x, y, m, n):
+        perimeter = 0
+        if x == 0 or grid[y][x-1] != 1:
+            perimeter += 1
+        if x == n-1 or grid[y][x+1] != 1:
+            perimeter += 1
+        if y == 0 or grid[y-1][x] != 1:
+            perimeter += 1
+        if y == m-1 or grid[y+1][x] != 1:
+            perimeter += 1
+        return perimeter
