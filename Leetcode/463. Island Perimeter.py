@@ -35,13 +35,9 @@ class Solution:
                 
         
     def surrounding_perimeter(self, grid, x, y, m, n):
-        perimeter = 0
-        if x == 0 or grid[y][x-1] != 1:
-            perimeter += 1
-        if x == n-1 or grid[y][x+1] != 1:
-            perimeter += 1
-        if y == 0 or grid[y-1][x] != 1:
-            perimeter += 1
-        if y == m-1 or grid[y+1][x] != 1:
-            perimeter += 1
+        perimeter = 4
+        if x != 0 and grid[y][x-1] == 1:
+            perimeter -= 2
+        if y != 0 and grid[y-1][x] == 1:
+            perimeter -= 2
         return perimeter
