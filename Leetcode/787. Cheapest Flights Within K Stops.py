@@ -28,6 +28,58 @@ The price of each flight will be in the range [1, 10000].
 k is in the range of [0, n - 1].
 There will not be any duplicated flights or self cycles.
 """
+import collections
 class Solution:
     def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, K: int) -> int:
+        return self.dijkstras(n, flights, src, dst, K)
+        return self.bfs(n, flights, src, dst, K)
+        return self.bellman_ford(n, flights, src, dst, K)
         
+    # Time complexity: O(E + V log V)
+    # Space complexity: O(E+V)
+    def dijkstras(self, n, flights, src, dst, k):
+        f = collections.defaultdict(dict)
+        for a, b, cost in flights:
+            f[a][b] = cost
+        heap = [(0, src, k+1)]
+        while heap:
+            cost, i, k = heapq.heappop(heap)
+            if i == dst:
+                return cost
+            if k > 0:
+                for j in f[i]:
+                    heapq.heappush(heap, (cost + f[i][j], j, k-1))
+        return -1
+    
+    # Time complexity: O(V+E)
+    # Space complexity: O(E)
+    def bfs(self, n, flights, src, dst, k):
+        graph = collections.defaultdict(dict)
+        q = collections.deque()
+        min_price = float('inf')
+        
+        for u, v, cost in flights:
+            graph[u][v] = cost
+
+        q.append((0, src, 0))
+        while q:
+            stops, city, price = q.popleft()
+            if city == dst:
+                min_price = min(min_price, price)
+                continue
+            if stops <= k and price <= min_price:
+                for nei in graph[city]:
+                    q.append((stops+1, nei, graph[city][nei] + price))
+        return min_price if min_price != float('inf') else -1
+        
+    # Time complexity: O(V**2 + E)
+    # Space complexity: O(V)
+    def bellman_ford(self, n, flights, src, dst, k):
+        costs = [float('inf') for _ in range(n)]
+        costs[src] = 0
+        for _ in range(k+1):
+            copy = costs[:]
+            for u, v, cost in flights:
+                copy[v] = min(copy[v], costs[u] + cost)
+            costs = copy
+        return -1 if costs[dst] == float('inf') else costs[dst]
