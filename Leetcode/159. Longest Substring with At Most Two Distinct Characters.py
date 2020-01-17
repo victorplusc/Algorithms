@@ -17,6 +17,10 @@ Explanation: t is "aabbb" which its length is 5.
 # Space complexity: O(1)
 class Solution:
     def lengthOfLongestSubstringTwoDistinct(self, s: str) -> int:
+        # return self.unoptimized(s)
+        return self.optimized(s)
+
+    def unoptimized(self, s):
         n = len(s)
         if n < 3:
             return n
@@ -35,4 +39,17 @@ class Solution:
                 i += 1
             longest = max(longest, j-i)
         
+        return longest
+    
+    def optimized(self, s):
+        left = longest = 0
+        d = {}
+        max_distinct = 2
+        for right, char in enumerate(s):
+            d[char] = right
+            if len(d.keys()) == max_distinct + 1:
+                rm_idx = min(d[char] for char in d.keys())
+                d.pop(s[rm_idx], None)
+                left = rm_idx + 1
+            longest = max(longest, right-left + 1)
         return longest
