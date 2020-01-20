@@ -13,7 +13,7 @@ Output: 2
 Explanation: T is "aa" which its length is 2.
 """
 # Time complexity: O(N)
-# Space complexity: O(N)
+# Space complexity: O(K)
 class Solution(object):
     def lengthOfLongestSubstringKDistinct(self, s, k):
         """
@@ -21,6 +21,9 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
+        return self.optimized_hash(s, k)
+
+    def optimized_hash(self, s, k):
         n = len(s)
         if n == k:
             return n
@@ -31,6 +34,23 @@ class Solution(object):
             if len(indices) == k+1:
                 rm_idx = min(indices[idx] for idx in indices)
                 indices.pop(s[rm_idx])
+                i = rm_idx + 1
+            longest = max(longest, j-i+1)
+        return longest
+
+    def ordered_dict(self, s, k):
+        n = len(s)
+        if n == k:
+            return n
+        i = longest = 0
+        indices = collections.OrderedDict()
+        for j in range(n):
+            char = s[j]
+            if char in indices:
+                del indices[char]
+            indices[char] = j
+            if len(indices) == k+1:
+                _, rm_idx = indices.popitem(last=False)
                 i = rm_idx + 1
             longest = max(longest, j-i+1)
         return longest
