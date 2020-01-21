@@ -37,6 +37,20 @@ class Solution:
             curr = self.helper(curr)
         return curr
         
+    def more_optimized(self, s):
+        new_n = []
+        count = 1
+        for i in range(1, len(s)):
+            if s[i] == s[i-1]:
+                count += 1
+            else:
+                new_n.append(str(count))
+                new_n.append(s[i-1])
+                count = 1
+        new_n.append(str(count))
+        new_n.append(s[-1])
+        return "".join(new_n)
+    
     def helper(self, s):
         new_n = []
         s += "#"
@@ -45,6 +59,7 @@ class Solution:
             if s[i] == s[i+1]:
                 count += 1
             else:
-                new_n += str(count) + s[i]
+                new_n.append(str(count))
+                new_n.append(s[i])
                 count = 1
         return "".join(new_n)
