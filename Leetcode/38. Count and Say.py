@@ -37,26 +37,14 @@ class Solution:
             curr = self.helper(curr)
         return curr
         
-    def helper(self, n):
-        hashmap = {
-            "1" : "11",
-            "11" : "21",
-            "111" : "31",
-            "2" : "12",
-            "22" : "1212",
-            "222" : "32",
-            "3" : "13",
-            "33" : "1313",
-            "333" : "33",
-        }
+    def helper(self, s):
         new_n = []
-        temp = []
-        for c in n:
-            if not temp:
-                temp.append(c)
-            elif c not in temp:
-                word = "".join(temp)
-                new_n.append(hashmap[word])
+        s += "#"
+        count = 1
+        for i in range(len(s) - 1):
+            if s[i] == s[i+1]:
+                count += 1
             else:
-                temp.append(c)
-        return "".join(new_n) if new_n else "".join(temp)
+                new_n += str(count) + s[i]
+                count = 1
+        return "".join(new_n)
