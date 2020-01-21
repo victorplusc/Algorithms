@@ -26,6 +26,23 @@ class Solution(object):
     def optimized_hash(self, s, k):
         n = len(s)
         if n == k:
+            return k
+        hashmap = collections.defaultdict(int)
+        i = j = longest = 0
+        
+        for j in range(n):
+            hashmap[s[j]] += 1
+            while len(hashmap) > k:
+                hashmap[s[i]] -= 1
+                if hashmap[s[i]] == 0:
+                    del hashmap[s[i]]
+                i += 1
+            longest = max(longest, j-i+1)
+        return longest
+    
+    def alternate_unoptimized(self, s, k):
+        n = len(s)
+        if n == k:
             return n
         i = longest = 0
         indices = {}
