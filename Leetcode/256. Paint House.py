@@ -37,7 +37,7 @@ class Solution:
             total_cost += min(self.helper(costs, n+1, 0), self.helper(costs, n+1, 1))
         return total_cost
     
-    # Time complexity: O(2**N)
+    # Time complexity: O(N)
     # Space complexity: O(N)
     def memoized(self, costs):
         if not costs:
