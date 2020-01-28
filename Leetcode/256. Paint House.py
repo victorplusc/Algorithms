@@ -16,7 +16,9 @@ Explanation: Paint house 0 into blue, paint house 1 into green, paint house 2 in
 class Solution:
     def minCost(self, costs: List[List[int]]) -> int:
         # return self.recursive(costs)
-        return self.memoized(costs)
+        # return self.memoized(costs)
+        # return self.dp(costs)
+        return self.optimized_dp(costs)
 
     # Time complexity: O(2**N)
     # Space complexity: O(N)
@@ -59,3 +61,30 @@ class Solution:
             total_cost += min(self.helper2(costs, n+1, 0, memo), self.helper2(costs, n+1, 1, memo))
         memo[(n, color)] = total_cost
         return total_cost
+    
+    # Time complexity: O(N)
+    # Space complexity: O(1)
+    def dp(self, costs):
+        if len(costs) == 0:
+            return 0
+        for i in range(len(costs)-1):
+            costs[-2-i][0] += min(costs[-1-i][1], costs[-1-i][2])
+            costs[-2-i][1] += min(costs[-1-i][0], costs[-1-i][2])
+            costs[-2-i][2] += min(costs[-1-i][0], costs[-1-i][1])
+        
+        return min(costs[0])
+    
+    # Time complexity: O(N)
+    # Space complexity: O(1)
+    def optimized_dp(self, costs):
+        if len(costs) == 0:
+            return 0
+        previous_row = costs[-1]
+        for i in range(len(costs)-1):
+            current_row = costs[-2-i]
+            current_row[0] += min(previous_row[1], previous_row[2])
+            current_row[1] += min(previous_row[0], previous_row[2])
+            current_row[2] += min(previous_row[0], previous_row[1])
+            previous_row = current_row
+        return min(previous_row)
+    
