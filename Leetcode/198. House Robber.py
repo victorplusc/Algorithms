@@ -5,24 +5,20 @@ You are a professional robber planning to rob houses along a street. Each house 
 Given a list of non-negative integers representing the amount of money of each house, determine the maximum amount of money you can rob tonight without alerting the police.
 """
 
-
-## Bottom-up DP
-# Time complexity: O(N)
-# Space complexity: O(1)
 class Solution:
+    ## Bottom-up DP, more 
+    # Time complexity: O(N)
+    # Space complexity: O(1)
     def rob(self, nums: List[int]) -> int:
         if len(nums) == 0:
             return 0
-        
-        i_minus_2 = 0
-        i_minus_1 = nums[0]
-        for i in range(1, len(nums)):
-            val = nums[i]
-            temp_1 = i_minus_1
-            i_minus_1 = max(i_minus_2+val, i_minus_1)
-            i_minus_2 = temp_1
-            
-        return i_minus_1
+        prev_max = 0
+        curr_max = 0
+        for val in nums:
+            temp = curr_max
+            curr_max = max(prev_max + val, curr_max)
+            prev_max = temp
+        return curr_max
 
 ## Bottom-up DP
 # Time complexity: O(N)
@@ -38,8 +34,6 @@ class Solution:
             dp.append(max(dp[-1], dp[-2]+val))
         return dp[-1]
 """
-
-
 
 ## Top-down recursive
 # Time complexity: O(N)
