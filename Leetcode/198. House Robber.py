@@ -6,7 +6,7 @@ Given a list of non-negative integers representing the amount of money of each h
 """
 
 class Solution:
-    ## Bottom-up DP, more 
+    ## Bottom-up DP, more coherent
     # Time complexity: O(N)
     # Space complexity: O(1)
     def rob(self, nums: List[int]) -> int:
