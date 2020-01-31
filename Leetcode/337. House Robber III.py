@@ -38,7 +38,8 @@ Explanation: Maximum amount of money the thief can rob = 4 + 5 = 9.
 class Solution:
     def rob(self, root: TreeNode) -> int:
         # return self.naive(root)
-        return self.memoized(root, {})
+        # return self.memoized(root, {})
+        return max(self.dp(root))
     
     # Time complexity: O(~2**N)
     # Space complexity: O(N)
@@ -70,3 +71,16 @@ class Solution:
         memo[node] = max(val, self.memoized(node.left, memo) + self.memoized(node.right, memo))
 
         return memo[node]
+    
+    # Time complexity: O(N)
+    # Space complexity: O(N), but O(1) excluding stack cost
+    def dp(self, root):
+        if not root:
+            return [0, 0]
+        
+        left_inc, left_ex = self.dp(root.left)
+        right_inc, right_ex = self.dp(root.right)
+        curr_inc = root.val + left_ex + right_ex
+        curr_ex = max(left_inc, left_ex) + max(right_inc, right_ex)
+        
+        return curr_inc, curr_ex
