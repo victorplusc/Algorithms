@@ -22,16 +22,26 @@ Example 2:
 Input: m = 7, n = 3
 Output: 28
 """
-
-# Time complexity: O(N*M)
-# Space complexity: O(N*M)
 class Solution(object):
     def uniquePaths(self, m, n):
-        """
-        :type m: int
-        :type n: int
-        :rtype: int
-        """
+        # return self.two_dimensional(m, n)
+        return self.space_optimized(m, n)
+    
+    # Time complexity: O(N*M)
+    # Space complexity: O(N)
+    def space_optimized(self, m, n):
+        if not m or not n: return 0
+        
+        dp = [1 for _ in range(n)]
+        for _ in range(1, m):
+            for j in range(1, n):
+                dp[j] += dp[j-1]
+
+        return dp[-1]
+    
+    # Time complexity: O(N*M)
+    # Space complexity: O(N*M)
+    def two_dimensional(self, m, n):
         grid = [[1 for i in range(n)] for i in range(m)]
         
         for y in range(1, m):
