@@ -15,8 +15,28 @@ Explanation: The longest valid parentheses substring is "()()"
 """
 class Solution:
     def longestValidParentheses(self, s: str) -> int:
-        return self.stack(s)
-    
+        # return self.dp(s)
+        # return self.stack(s)
+        return self.two_passes(s)
+
+    # Time complexity: O(N)
+    # Space complexity: O(N)
+    def dp(self, s):
+        if len(s) <= 1:
+            return 0
+        longest = 0
+        dp = [0] * len(s)
+        for i in range(1, len(s)):
+            if s[i] == ")":
+                if s[i-1] == "(":
+                    dp[i] = dp[i-2] + 2 if (i-2 > 0) else 2
+                    longest = max(dp[i], longest)
+                else:
+                    if i-dp[i-1]-1 >= 0 and s[i-dp[i-1]-1] == "(":
+                        dp[i] = dp[i-1] + 2 + (dp[i-dp[i-1]-2] if i-dp[i-1]-2 >= 0 else 0)
+                        longest = max(dp[i], longest)
+        return longest
+        
     # Time complexity: O(N)
     # Space complexity: O(N)
     def stack(self, s):
@@ -32,3 +52,4 @@ class Solution:
                 else:
                     longest = max(longest, i-stack[-1])
         return longest
+    
