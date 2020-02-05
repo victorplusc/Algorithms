@@ -41,15 +41,45 @@ class Solution:
     # Space complexity: O(N)
     def stack(self, s):
         longest = 0
-        stack = [-1]
+        stack = [0]
         for i, c in enumerate(s):
             if c == "(":
-                stack.append(i)
+                stack.append(0)
             else:
-                stack.pop()
-                if not stack:
-                    stack.append(i)
+                if len(stack) > 1:
+                    val = stack.pop()
+                    stack[-1] += val+2
+                    longest = max(longest, stack[-1])
                 else:
-                    longest = max(longest, i-stack[-1])
+                    stack = [0]
         return longest
     
+    # Time complexity: O(N)
+    # Space complexity: O(1)
+    def two_passes(self, s):
+        n = len(s)
+        if n <= 1:
+            return 0
+        left = right = longest = 0
+        
+        for c in s:
+            if c == "(":
+                left += 1
+            else:
+                right += 1
+            if left == right:
+                longest = max(longest, 2*left)
+            elif right > left:
+                left = right = 0
+        
+        right = left = 0
+        for i in range(n-1, 0, -1):
+            if s[i] == ")":
+                right += 1
+            else:
+                left += 1
+            if left == right:
+                longest = max(longest, 2*right)
+            elif left > right:
+                right = left = 0
+        return longest
