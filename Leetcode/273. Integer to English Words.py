@@ -111,8 +111,3 @@ class Solution:
             9: "Nine"
         }
         return mapping[num]
-
-        
-        
-        
-        
