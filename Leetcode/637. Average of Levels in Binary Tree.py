@@ -25,9 +25,32 @@ The range of node's value is in the range of 32-bit signed integer.
 # Space complexity: O(N)
 class Solution:
     def averageOfLevels(self, root: TreeNode) -> List[float]:
+        return self.dfs(root)
+        return self.bfs(root)
+    
+    def dfs(self, root):
+        count = []
+        res = []
+        self.helper(root, 0, res, count)
+        res = [res[i]/count[i] for i in range(len(res))]
+        return res
+    
+    def helper(self, node, depth, res, count):
+        if not node:
+            return
+        if depth < len(res):
+            res[depth] += node.val
+            count[depth] += 1
+        else:
+            res.append(node.val)
+            count.append(1)
+        self.helper(node.left, depth+1, res, count)
+        self.helper(node.right, depth+1, res, count)
+    
+
+    def bfs(self, root):
         if not root:
             return [0]
-
         levels = []
         queue = collections.deque([root])
         while queue:
