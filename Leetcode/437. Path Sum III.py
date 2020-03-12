@@ -35,7 +35,27 @@ Return 3. The paths that sum to 8 are:
 
 class Solution:
     def pathSum(self, root: TreeNode, target: int) -> int:
-        return self.naive(root, target)
+        # return self.naive(root, target)
+        return self.memoized(root, target)
+    
+    # Time complexity: O(N)
+    # Space complexity: O(N)
+    def memoized(self, root, target):
+        seen = {0:1}
+        self.res = 0
+        self.dfs(root, target, 0, seen)
+        return self.res
+    
+    def dfs(self, root, target, curr, seen):
+        if not root:
+            return
+        curr += root.val
+        old = curr-target
+        self.res += seen.get(old, 0)
+        seen[curr] = seen.get(curr, 0) + 1
+        self.dfs(root.left, target, curr, seen)
+        self.dfs(root.right, target, curr, seen)
+        seen[curr] -= 1
     
     # Time complexity: O(N**2)
     # Space complexity: O(N)
