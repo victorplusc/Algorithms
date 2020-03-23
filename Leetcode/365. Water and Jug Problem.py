@@ -20,7 +20,33 @@ Output: False
 """
 class Solution:
     def canMeasureWater(self, x: int, y: int, z: int) -> bool:
+        # return self.bfs(x, y, z)
         return self.math_approach(x, y, z)
+    
+    # Time complexity: O(XY)
+    # Space complexity: O(1)
+    def bfs(self, x, y, z):
+        if x+y < z:
+            return False
+        stack = [(0, 0)]
+        visited = set((0, 0))
+        while stack:
+            a, b = stack.pop()
+            if a+b == z:
+                return True
+            states = set()
+            states.add((x, b))
+            states.add((a, y))
+            states.add((0, b))
+            states.add((a, 0))
+            states.add((min(x, b+a), 0 if b < x-a else b-(x-a)))
+            states.add((0 if a+b < y else a-(y-b), min(b+a, y)))
+            
+            for state in states:
+                if state in visited: continue
+                stack.append(state)
+                visited.add(state)
+        return False
     
     # Time complexity: O(log N)
     # Space complexity: O(1)
