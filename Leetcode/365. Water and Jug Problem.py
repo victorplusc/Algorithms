@@ -23,7 +23,7 @@ class Solution:
         # return self.bfs(x, y, z)
         return self.math_approach(x, y, z)
     
-    # Time complexity: O(XY)
+    # Time complexity: O(X+Y)
     # Space complexity: O(1)
     def bfs(self, x, y, z):
         if x+y < z:
