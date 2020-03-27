@@ -28,7 +28,8 @@ p and q are different and both values will exist in the binary tree.
 #         self.right = None
 class Solution:
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        return self.recursive(root, p, q)
+        # return self.recursive(root, p, q)
+        return self.iterative_parent_pointers(root, p, q)
     
     # Time complexity: O(N)
     # Space complexity: O(N)
@@ -48,3 +49,27 @@ class Solution:
         
         helper(root)
         return self.ans
+    
+    # Time complexity: O(N)
+    # Space complexity: O(N)
+    def iterative_parent_pointers(self, root, p, q):
+        stack = [root]
+        parent = {root: None}
+        
+        while p not in parent or q not in parent:
+            node = stack.pop()
+            
+            if node.left:
+                parent[node.left] = node
+                stack.append(node.left)
+            if node.right:
+                parent[node.right] = node
+                stack.append(node.right)
+        ancestors = set()
+        while p:
+            ancestors.add(p)
+            p = parent[p]
+        while q not in ancestors:
+            q = parent[q]
+        return q
+   
