@@ -28,7 +28,6 @@ class Solution:
         
         right_prod[-1] = 1
         for i in reversed(range(n-1)):
-            print(i)
             right_prod[i] = right_prod[i+1] * nums[i+1]
         
         for i in range(n):
@@ -47,8 +46,8 @@ class Solution:
             output[i] = output[i-1] * nums[i-1]
         
         right_prod = 1
-        for i in reversed(range(n)):
-            output[i] *= right_prod
-            right_prod *= nums[i]
+        for i in range(n):
+            output[-1-i] *= right_prod
+            right_prod *= nums[-1-i]
             
         return output
