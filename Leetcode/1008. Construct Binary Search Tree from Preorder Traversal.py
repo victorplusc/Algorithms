@@ -22,28 +22,25 @@ The values of preorder are distinct.
 
 class Solution:
     def bstFromPreorder(self, preorder: List[int]) -> TreeNode:
-        # return self.recursive(preorder)
+        return self.recursive(preorder)
         return self.iterative(preorder)
         
     # Time complexity: O(N)
     # Space complexity: O(N)
     def recursive(self, preorder):
-        if not preorder:
-            return None
-        
-        def helper(lower=-float('inf'), upper = float('inf')):
+        def helper(bound = float('inf')):
             nonlocal idx
             if idx == n:
                 return None
             
             val = preorder[idx]
-            if val < lower or val > upper:
+            if val > bound:
                 return None
             
             idx += 1
             root = TreeNode(val)
-            root.left = helper(lower, val)
-            root.right = helper(val, upper)
+            root.left = helper(val)
+            root.right = helper(bound)
             return root
         
         idx = 0
