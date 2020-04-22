@@ -47,7 +47,26 @@ class Solution:
     def leftMostColumnWithOne(self, BinaryMatrix: 'BinaryMatrix') -> int:
         # return self.diagonal_search(BinaryMatrix)
         return self.binary_search(BinaryMatrix)
- 
+    
+    # Time complexity: O(N * log M)
+    # Space complexity: O(1)
+    def binary_search(self, BinaryMatrix):
+        n, m = BinaryMatrix.dimensions()
+        res = float('inf')
+        for y in range(n):
+            left, right = 0, m-1
+            while left < right:
+                mid = (left+right)//2
+                if BinaryMatrix.get(y, mid) == 0:
+                    left = mid + 1
+                else:
+                    right = mid
+            if left < m and BinaryMatrix.get(y, left) == 1:
+                res = min(res, left)
+        return res if res != float('inf') else -1
+    
+    # Time complexity: O(N + M)
+    # Space complexity: O(1)
     def diagonal_search(self, BinaryMatrix):
         n, m = BinaryMatrix.dimensions()
         
