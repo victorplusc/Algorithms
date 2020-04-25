@@ -37,9 +37,30 @@ class Solution:
     
     # Time complexity: O(N)
     # Space complexity: O(1)
-    def two_pointers(self, S, T):
-        last_char_s = ""
-        last_char_t = ""
+    def two_pointers(self, s, t):
+        i = len(s)-1
+        j = len(t)-1
+        s_del = 0
+        t_del = 0
+        
+        while True:
+            while i >= 0 and (s_del or s[i] == "#"):
+                if s[i] == "#":
+                    s_del += 1
+                else:
+                    s_del -= 1
+                i -= 1
+            while j >= 0 and (t_del or t[j] == "#"):
+                if t[j] == "#":
+                    t_del += 1
+                else:
+                    t_del -= 1
+                j -= 1
+            if not (i >= 0 and j >= 0 and s[i] == t[j]):
+                return i == j == -1
+            i -= 1
+            j -= 1
+        return True
     
     # Time complexity: O(N)
     # Space complexity: O(N)
