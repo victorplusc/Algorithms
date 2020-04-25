@@ -6,7 +6,7 @@ Given a 2d grid map of '1's (land) and '0's (water), count the number of islands
 # Time complexity: O(N*M)
 # Space complexity: O(N*M)
 class Solution:
-    def numIslands(self, grid: List[List[str]]) -> int:
+        def numIslands(self, grid: List[List[str]]) -> int:
         if not grid:
             return 0
         
@@ -14,6 +14,7 @@ class Solution:
         for y in range(len(grid)):
             for x in range(len(grid[0])):
                 if grid[y][x] == "1":
+                    # self.bfs(grid, y, x)
                     self.dfs(grid, y, x)
                     islands += 1
         return islands
@@ -26,6 +27,20 @@ class Solution:
         self.dfs(grid, y-1, x)
         self.dfs(grid, y, x+1)
         self.dfs(grid, y, x-1)
+        
+    def bfs(self, grid, y, x):
+        m, n = len(grid), len(grid[0])
+        directions = [(0, 1), (1, 0), (-1, 0), (0, -1)]
+        queue = collections.deque()
+        queue.append((y, x))
+        grid[y][x] = "X"
+        while queue:
+            y, x = queue.popleft()
+            for d in directions:
+                r, c = y+d[0], x+d[1]
+                if not (r < 0 or c < 0 or r >= m or c >= n) and grid[r][c] == "1":
+                    queue.append((r, c))
+                    grid[r][c] = "X"
         
         
 # ================================== FINDING MAXIMUM ISLAND SIZE (VARIANT) ==================================
