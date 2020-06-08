@@ -38,28 +38,35 @@ class Solution:
     # Space complexity: O(M*N)
     def classic(self, text1, text2):
         n, m = len(text1), len(text2)
-        dp = [[0 for _ in range(m+1)] for _ in range(n+1)]
+        dp = [[0] * (m+1) for _ in range(n+1)]
+
+        
         for i in range(n):
             for j in range(m):
-                dp[i+1][j+1] = dp[i][j]+1 if text1[i] == text2[j] else max(dp[i+1][j], dp[i][j+1])
+                if text1[i] != text2[j]:
+                    dp[i+1][j+1] = max(dp[i][j+1], dp[i+1][j])
+                else:
+                    dp[i+1][j+1] = dp[i][j] + 1
         return dp[-1][-1]
 
     # Time complexity: O(M*N)
     # Space complexity: O(min(M, N))   
     def linear_space(self, text1, text2):
-        if len(text2) < len(text1):
+        if len(text2) > len(text1):
             text1, text2 = text2, text1
         
-        # Text 1 will always be the shortest
-        prev = [0] * (len(text1)+1)
-        curr = [0] * (len(text1)+1)
+        # Text 1 will always be the longest
+        n, m = len(text1), len(text2)
         
-        for y in reversed(range(len(text2))):
-            for x in reversed(range(len(text1))):
-                if text2[y] == text1[x]:
-                    curr[x] = 1 + prev[x+1]
+        prev = [0] * (len(text2)+1)
+        curr = [0] * (len(text2)+1)
+        
+        for i in range(n):
+            for j in range(m):
+                if text1[i] == text2[j]:
+                    curr[j+1] = 1 + prev[j]
                 else:
-                    curr[x] = max(prev[x], curr[x+1])
+                    curr[j+1] = max(prev[j+1], curr[j])
             prev, curr = curr, prev
-        
-        return prev[0]
+        return prev[-1]
+     
