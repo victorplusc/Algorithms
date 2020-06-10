@@ -24,7 +24,8 @@ Note:
 The input prerequisites is a graph represented by a list of edges, not adjacency matrices. Read more about how a graph is represented.
 You may assume that there are no duplicate edges in the input prerequisites.
 """
-
+# Time complexity: O(V+E)
+# Space complexity: O(V+E)
 class Solution:
     def canFinish(self, n: int, prerequisites: List[List[int]]) -> bool:
         graph = [[] for _ in range(n)]
