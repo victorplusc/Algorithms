@@ -9,47 +9,41 @@ Given the total number of courses and a list of prerequisite pairs, return the o
 There may be multiple correct orders, you just need to return one of them. If it is impossible to finish all courses, return an empty array.
 
 Example 1:
-
 Input: 2, [[1,0]] 
 Output: [0,1]
 Explanation: There are a total of 2 courses to take. To take course 1 you should have finished   
              course 0. So the correct course order is [0,1] .
+             
 Example 2:
-
 Input: 4, [[1,0],[2,0],[3,1],[3,2]]
 Output: [0,1,2,3] or [0,2,1,3]
 Explanation: There are a total of 4 courses to take. To take course 3 you should have finished both     
              courses 1 and 2. Both courses 1 and 2 should be taken after you finished course 0. 
              So one correct course order is [0,1,2,3]. Another correct ordering is [0,2,1,3] .
+             
 Note:
-
 The input prerequisites is a graph represented by a list of edges, not adjacency matrices. Read more about how a graph is represented.
 You may assume that there are no duplicate edges in the input prerequisites.
 """
-
 # Time complexity: O(N)
 # Space complexity: O(N)
 class Solution:
-    def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-        d = {i: set() for i in range(numCourses)}
-        neighbours = collections.defaultdict(set)
+    def findOrder(self, n: int, prerequisites: List[List[int]]) -> List[int]:
+        req_of = {i:[] for i in range(n)}
+        indeg = {i:0 for i in range(n)}
         
-        for course, prereq in prerequisites:
-            d[course].add(prereq)
-            neighbours[prereq].add(course)
+        for course, req in prerequisites:
+            req_of[req].append(course)
+            indeg[course] += 1
         
-        queue = collections.deque([i for i in d if not d[i]])
-        count = 0
+        stack = [node for node in req_of if indeg[node] == 0]
         order = []
-        
-        while queue:
-            node = queue.popleft()
-            order.append(node)
-            count += 1
-            for i in neighbours[node]:
-                d[i].remove(node)
-                if not d[i]:
-                    queue.append(i)
+        while stack:
+            req = stack.pop()
+            order.append(req)
+            for course in req_of[req]:
+                indeg[course] -= 1
+                if indeg[course] == 0:
+                    stack.append(course)
                     
-        return order if count == numCourses else []
-        
+        return order if len(order) == n else []
