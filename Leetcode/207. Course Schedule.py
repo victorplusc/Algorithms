@@ -55,20 +55,23 @@ class Solution:
 
 class Solution:
     def canFinish(self, n: int, prerequisites: List[List[int]]) -> bool:
-        graph = {i:set() for i in range(n)}
-        indeg = {i:0     for i in range(n)}
-        for course, req in set(tuple(relation) for relation in prerequisites):
-            graph[course] |= {req}
-            indeg[req] += 1
-            
-        queue  =  [i for i in range(n) if not indeg[i]]
-        visits =  set(queue) 
-        for node in queue:
-            for neighbour in graph[node]:
-                if neighbour in visits: 
-                    return False
-                indeg[neighbour] -= 1
-                if not indeg[neighbour]:
-                    visits.add(neighbour)
-                    queue += neighbour,
-        return len(visits) == n
+        graph = {i:[] for i in range(n)}
+        indeg = {i:0 for i in range(n)}
+        
+        total_deps = 0
+        for course, req in prerequisites:
+            graph[req].append(course)
+            indeg[course] += 1
+            total_deps += 1
+        
+        non_dep = [node for node in graph if indeg[node] == 0]
+        visited = 0
+        
+        while non_dep:
+            req = non_dep.pop()
+            for course in graph[req]:
+                visited += 1
+                indeg[course] -= 1
+                if indeg[course] == 0:
+                    non_dep.append(course)
+        return visited == total_deps
