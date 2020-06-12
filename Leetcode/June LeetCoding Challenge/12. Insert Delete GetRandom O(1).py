@@ -33,7 +33,7 @@ randomSet.insert(2);
 randomSet.getRandom();
 """
 # Time complexity: O(1)
-# Space complexity: O(1)
+# Space complexity: O(N)
 class RandomizedSet:
 
     def __init__(self):
