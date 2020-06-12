@@ -31,7 +31,7 @@ Note:  Any solutions that attempt to circumvent the judge will result in disqual
 # """
 # class Master:
 #     def guess(self, word: str) -> int:
-# Time complexity: O(N)
+# Time complexity: O(N**2)
 # Space complexity: O(N)
 class Solution:
     def findSecretWord(self, wordlist: List[str], master: 'Master') -> None:
