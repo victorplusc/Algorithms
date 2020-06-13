@@ -55,7 +55,7 @@ class Solution:
             elif node not in ends:
                 for i in range(4):
                     for d in (-1, 1):
-                        x = str((ord(node[i])-ord("0") + d + 10) % 10)
+                        x = str((ord(node[i])-ord("0") + d) % 10)
                         nei = node[0:i]+x+node[i+1:]
                         if nei not in seen:
                             queue.append(nei)
