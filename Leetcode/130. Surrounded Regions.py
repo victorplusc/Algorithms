@@ -46,7 +46,6 @@ class Solution:
                 if board[y][x] == "O": board[y][x] = "X"
                 elif board[y][x] == "V": board[y][x] = "O"
         
-        
     def dfs(self, board, y, x):
         if x < 0 or y < 0 or y >= len(board) or x >= len(board[0]) or board[y][x] != "O":
             return
