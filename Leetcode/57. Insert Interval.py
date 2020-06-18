@@ -13,7 +13,36 @@ Input: intervals = [[1,2],[3,5],[6,7],[8,10],[12,16]], newInterval = [4,8]
 Output: [[1,2],[3,10],[12,16]]
 Explanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10].
 """
+# Time complexity: O(N)
+# Space complexity: O(N)
 class Solution:
+    def insert(self, intervals: List[List[int]], new_interval: List[int]) -> List[List[int]]:
+        if not intervals:
+            return [new_interval]
+        
+        new_start, new_end = new_interval
+        idx, n = 0, len(intervals)
+        merged = []
+        
+        while idx < n and intervals[idx][0] < new_start:
+            merged.append(intervals[idx])
+            idx += 1
+        
+        if not merged or merged[-1][1] < new_start:
+            merged.append(new_interval)
+        else:
+            merged[-1][1] = max(merged[-1][1], new_end)
+        
+        while idx < n:
+            start, end = intervals[idx]
+            if start > merged[-1][1]:
+                merged.append(intervals[idx])
+            else:
+                merged[-1][1] = max(end, merged[-1][1])
+            idx += 1
+        return merged
+
+# ----- If the intervals weren't merged to begin with:
     def insert(self, intervals: List[List[int]], new_interval: List[int]) -> List[List[int]]:
         if not intervals:
             return [new_interval]
