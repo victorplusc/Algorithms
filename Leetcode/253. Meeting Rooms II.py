@@ -3,14 +3,32 @@
 Given an array of meeting time intervals consisting of start and end times [[s1,e1],[s2,e2],...] (si < ei), find the minimum number of conference rooms required.
 
 Example 1:
-
 Input: [[0, 30],[5, 10],[15, 20]]
 Output: 2
-Example 2:
 
+Example 2:
 Input: [[7,10],[2,4]]
 Output: 1
 """
+# Time complexity: O(N)
+# Space complexity: O(N)
+class Solution(object):
+    def minMeetingRooms(self, intervals):
+        if not intervals:
+            return 0
+        start = sorted([interval[0] for interval in intervals])
+        end = sorted([interval[1] for interval in intervals])
+        
+        rooms = 0
+        j = 0
+        for i, start_time in enumerate(start):
+            if end[j] <= start_time:
+                rooms -= 1
+                j += 1
+            rooms += 1
+        return rooms
+    
+#____________________________________________________________________ Old solutions
 
 class Solution(object):
     def minMeetingRooms(self, intervals):
@@ -40,8 +58,6 @@ class Solution(object):
             
         return len(free_rooms)
 
-    
-    
 # Chronological ordering method
 # Time complexiy: O(N log N)
 # Space complexity: O(N)
