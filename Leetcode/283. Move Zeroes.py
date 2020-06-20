@@ -18,14 +18,10 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        zeros = 0
-        n = len(nums)
-        curr = 0
-        for i in nums:
-            if i != 0:
-                nums[curr] = i
-                curr += 1
-            else:
-                zeros += 1
-        for i in range(n-zeros, n):
+        last_nonzero = 0
+        for i, val in enumerate(nums):
+            if val != 0:
+                nums[last_nonzero] = val
+                last_nonzero += 1
+        for i in range(last_nonzero, len(nums)):
             nums[i] = 0
