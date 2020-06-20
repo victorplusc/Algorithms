@@ -2,8 +2,8 @@
 46. Permutations
 Given a collection of distinct integers, return all possible permutations.
 """
-# Time complexity: O(N*N)
-# Space complexity: O(N*N)
+# Time complexity: O(N!)
+# Space complexity: O(N!)
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
         n = len(nums)
