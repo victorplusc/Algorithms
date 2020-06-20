@@ -20,7 +20,7 @@ class Solution:
         Do not return anything, modify nums in-place instead.
         """
         i = len(nums) - 2
-        while i >= 0 and nums[i + 1] <= nums[i]:
+        while i >= 0 and nums[i] >= nums[i+1]:
             i -= 1
         
         if i >= 0:
