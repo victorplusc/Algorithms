@@ -13,6 +13,8 @@ Example 2:
 Input: [0,1,0,1,0,1,99]
 Output: 99
 """
+# Time complexity: O(N)
+# Space complexity: O(1)
 class Solution:
     def singleNumber(self, nums: List[int]) -> int:
         seen_once = seen_twice = 0
