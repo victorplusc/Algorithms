@@ -35,15 +35,15 @@ The substring "BBBB" has the longest repeating letters, which is 4.
 # Space complexity: O(N)
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
-        unique_count = 0
-        left = 0
+        highest_count = 0
         longest = 0
-        count =  collections.Counter()
-        for right, c in enumerate(s):
-            unique_count = max(unique_count, count[c]+1)
-            count[c] += 1
-            replace_count = right-left+1-unique_count
-            if replace_count > k:
+        left = 0
+        count = collections.Counter()
+        for right, val in enumerate(s):
+            count[val] += 1
+            highest_count = max(highest_count, count[val])
+            to_remove = right-left+1-highest_count
+            if to_remove > k:
                 count[s[left]] -= 1
                 left += 1
             else:
