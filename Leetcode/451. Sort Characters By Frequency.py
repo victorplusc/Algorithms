@@ -42,10 +42,17 @@ Note that 'A' and 'a' are treated as two different characters.
 # Space complexity: O(N)
 class Solution:
     def frequencySort(self, s: str) -> str:
-        count = collections.Counter(s)
-        char_mapping = collections.defaultdict(set)
-        output = []
-        for key, val in count.most_common():
-            output.append(key*val)
+        if not s: return s
         
-        return "".join(output)
+        count = collections.Counter(s)
+        max_freq = max(count.values())
+        
+        buckets = [[] for _ in range(max_freq+1)]
+        for c, i in count.items():
+            buckets[i].append(c)
+        
+        new_s = []
+        for i in reversed(range(len(buckets))):
+            for c in buckets[i]:
+                new_s.append(c*i)
+        return "".join(new_s)
