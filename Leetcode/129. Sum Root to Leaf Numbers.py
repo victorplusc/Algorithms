@@ -43,6 +43,12 @@ Therefore, sum = 495 + 491 + 40 = 1026.
 # Space complexity: O(H)
 class Solution:
     def sumNumbers(self, root: TreeNode) -> int:
+        # return self.morris(root)
+        return self.dfs(root)
+    
+    # Time complexity: O(N)
+    # Space complexity: O(H)
+    def dfs(self, root):
         if not root: return 0
         total = self.helper(root, 0)
         return total
@@ -60,3 +66,33 @@ class Solution:
                 return left+right
             else:
                 return left if left else right if right is not None else None
+    
+    # Time complexity: O(N)
+    # Space complexity: O(1)
+    def morris(self, root):
+        total = curr = 0
+        while root:
+            if root.left:
+                pre = root.left
+                steps = 1
+                while pre.right and pre.right is not root:
+                    pre = pre.right
+                    steps += 1
+                    
+                if not pre.right:
+                    curr = curr*10 + root.val
+                    pre.right = root
+                    root = root.left
+                else:
+                    if not pre.left:
+                        total += curr
+                    for _ in range(steps):
+                        curr //= 10
+                    pre.right = None
+                    root = root.right
+            else:
+                curr = curr*10 + root.val
+                if not root.right:
+                    total += curr
+                root = root.right
+        return total
