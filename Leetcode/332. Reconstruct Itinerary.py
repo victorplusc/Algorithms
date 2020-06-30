@@ -21,6 +21,12 @@ Explanation: Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","
 """
 class Solution:
     def findItinerary(self, tickets: List[List[str]]) -> List[str]:
+        return self.dfs(tickets)
+        return self.backtracking(tickets)
+    
+    # Time complexity: O(E log E/V)
+    # Space complexity: O(V + E)
+    def dfs(self, tickets):
         graph = collections.defaultdict(list)
         
         for start, end in tickets:
@@ -30,12 +36,43 @@ class Solution:
             graph[node].sort(reverse=True)
         
         itinerary = []
-        
-        def dfs(start):
-            for curr in reversed(graph[start]):
-                graph[start].pop()
-                dfs(curr)
-            itinerary.append(start)
-        
-        dfs("JFK")
+        stack = ["JFK"]
+        while stack:
+            while graph[stack[-1]]:
+                stack.append(graph[stack[-1]].pop())
+                
+            itinerary.append(stack.pop())
+            
         return itinerary[::-1]
+    
+    # Time complexity: O(E**d)
+    # Space complexity: O(V + E)
+    def backtracking(self, tickets):
+        def bt(start, route):
+            nonlocal itinerary
+            if len(route) == n+1:
+                itinerary = route
+                return True
+            for i, next_dest in enumerate(graph[start]):
+                if not visited_bitmap[start][i]:
+                    visited_bitmap[start][i] = True
+                    new = bt(next_dest, route+[next_dest])
+                    visited_bitmap[start][i] = False
+                    if new:
+                        return True
+            return False
+        
+        graph = collections.defaultdict(list)
+        for start, end in tickets:
+            graph[start].append(end)
+        
+        visited_bitmap = {}
+        for start, locs in graph.items():
+            locs.sort()
+            visited_bitmap[start] = [False]*len(locs)
+        
+        n = len(tickets)
+        itinerary = []
+        route = ["JFK"]
+        bt("JFK", route)
+        return itinerary
