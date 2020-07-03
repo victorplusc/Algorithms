@@ -46,16 +46,13 @@ class Solution:
             return new
         
         seen = dict()
-        is_fast_fwded = False
         
         while N > 0:
-            if not is_fast_fwded:
-                state_key = tuple(cells)
-                if state_key in seen:
-                    N %= seen[state_key] - N
-                    is_fast_fwded = True
-                else:
-                    seen[state_key] = N
+            state_key = tuple(cells)
+            if state_key in seen:
+                N %= seen[state_key] - N
+            else:
+                seen[state_key] = N
             
             if N > 0:
                 N -= 1
