@@ -27,7 +27,6 @@ Explanation: An empty string is also valid.
 Example 4:
 Input: s = "(a(b(c)d)"
 Output: "a(b(c)d)"
- 
 
 Constraints:
 1 <= s.length <= 10^5
@@ -37,21 +36,24 @@ s[i] is one of  '(' , ')' and lowercase English letters.
 # Space complexity: O(N)
 class Solution:
     def minRemoveToMakeValid(self, s: str) -> str:
-        valid = list(s)
-        open_parens = 0
-
-        for i, c in enumerate(s):
+        opening_brackets = 0
+        new_s = []
+        for c in s:
             if c == "(":
-                open_parens += 1
-            elif c == ")" and open_parens < 1:
-                valid[i] = ""
+                opening_brackets += 1
+                new_s.append("(")
             elif c == ")":
-                open_parens -= 1
+                if opening_brackets > 0:
+                    opening_brackets -= 1
+                    new_s.append(")")
+            else:
+                new_s.append(c)
         
-        j = len(valid)-1
-        while open_parens > 0 and j >= 0:
-            if valid[j] == "(":
-                valid[j] = ""
-                open_parens -= 1
-            j -= 1
-        return "".join(valid)
+        for i in reversed(range(len(new_s))):
+            if opening_brackets == 0:
+                break
+            if new_s[i] == "(":
+                new_s[i] = ""
+                opening_brackets -= 1
+            
+        return "".join(new_s)
