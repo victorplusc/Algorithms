@@ -14,9 +14,9 @@ class LastKProduct():
         self.nums = collections.deque()
         self.zeroes = 0
     
-    def __multiply_all(self, K):
+    def __multiply_all(self):
         self.curr_prod = 1
-        for val in K:
+        for val in self.nums:
             self.curr_prod *= val
     
     def add(self, x):
@@ -28,6 +28,10 @@ class LastKProduct():
             to_divide = self.nums.popleft()
             if to_divide:
                 self.curr_prod /= to_divide
+            else:
+                self.zeroes -= 1
+                if self.zeroes == 0:
+                    self.__multiply_all()
     
     def get(self):
         return self.curr_prod
