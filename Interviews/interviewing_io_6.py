@@ -2,9 +2,7 @@
 Design a data structure that supports the following three operations. 
 
 1. a constructor that takes a parameter K 
-
 2. add(x) -- inserts the number x 
-
 3. get() -- returns the product of the last K elements inserted 
 """
 class LastKProduct():
@@ -21,8 +19,8 @@ class LastKProduct():
     
     def add(self, x):
         if x == 0:
-            self.curr_prod = 0
             self.zeroes += 1
+        self.curr_prod *= x
         self.nums.append(x)
         if len(self.nums) > self.K:
             to_divide = self.nums.popleft()
