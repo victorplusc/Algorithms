@@ -33,3 +33,35 @@ class LastKProduct():
     
     def get(self):
         return self.curr_prod
+
+# Design a data structure that supports the following two operations. 
+# 1. add(x) -- inserts the number x 
+#
+# 2. get(K) -- returns the product of the last K elements inserted 
+
+class LastKProducts():
+    def __init__(self):
+        self.cumulative = []
+        self.last_zero = -1
+    
+    def add(self, x):
+        if x == 0:
+            self.last_zero = len(self.cumulative)
+        if self.cumulative:
+            front = self.cumulative[-1]
+            if front == 0:
+                self.cumulative.append(x)
+            else:
+                self.cumulative.append(x*front)
+        else:
+            self.cumulative.append(x)
+    
+    def get(self, k):
+        front = self.cumulative[-1]
+        if not front: 
+            return 0
+        if self.last_zero >= len(self.cumulative)-k:
+            return 0
+        if not self.cumulative[-1-k]: 
+            return front
+        return front//self.cumulative[-1-k]
