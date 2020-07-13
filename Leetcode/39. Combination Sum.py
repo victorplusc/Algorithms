@@ -34,19 +34,21 @@ class Solution:
         return self.dp(candidates, target)
 
     def dfs(self, candidates, target):
+        def backtrack(remainder, idx, curr):
+            if remainder == 0:
+                output.append(curr[:])
+                return
+            for i in range(idx, n):
+                if candidates[i] > remainder:
+                    break
+                curr.append(candidates[i])
+                backtrack(remainder-candidates[i], i, curr)
+                curr.pop()
+        n = len(candidates)
         candidates.sort()
         output = []
-        self.dfs_helper(candidates, target, [], 0, output)
+        backtrack(target, 0, [])
         return output
-
-    def dfs_helper(self, A, rem, combo, idx, output):
-        if rem == 0:
-            output.append(combo)
-            return
-        for i in range(idx, len(A)):
-            if A[i] > rem:
-                break
-            self.dfs_helper(A, rem-A[i], combo+[A[i]], i, output)
 
     def dp(self, candidates, target):
         candidates.sort()
