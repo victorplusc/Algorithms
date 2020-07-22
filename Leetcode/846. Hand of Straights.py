@@ -43,15 +43,20 @@ class Solution:
                     count[k] -= 1
         return True
     
-    # Time complexity: O(N*log N + NW)
+    # Time complexity: O(N log N)
     # Space complexity: O(N)
-    def optimized_once(self, hand, W):
-        count = collections.Counter(hand)
-        for i in sorted(count):
-            if count[i] > 0:
-                for j in range(W)[::-1]:
-                    count[i+j] -= count[i]
-                    if count[i+j] < 0:
+class Solution:
+    def isNStraightHand(self, hand: List[int], W: int) -> bool:
+        if len(hand)%W != 0:
+            return False
+        counter = collections.Counter(hand)
+        
+        for n in sorted(counter):
+            if counter[n] > 0:
+                to_subtract = counter[n]
+                for k in range(n, n+W):
+                    counter[k] -= to_subtract
+                    if counter[k] < 0:
                         return False
         return True
     
