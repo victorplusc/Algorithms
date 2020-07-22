@@ -19,12 +19,10 @@ class Solution:
     # Time complexity: O(N)
     # Space complexity: O(1)
     def greedy(self, nums):
-        n = len(nums)
-        curr = max_sum = nums[0]
-        
-        for i in range(1, n):
-            curr = max(nums[i], curr+nums[i])
-            max_sum = max(max_sum, curr)
+        curr_sum = max_sum = nums[0]
+        for n in nums[1:]:
+            curr_sum = max(n, curr_sum+n)
+            max_sum = max(curr_sum, max_sum)
         return max_sum
 
     # Time complexity: O(N)
