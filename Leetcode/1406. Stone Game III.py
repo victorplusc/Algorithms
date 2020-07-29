@@ -47,19 +47,17 @@ Constraints:
 class Solution:
     def stoneGameIII(self, stoneValue: List[int]) -> str:
         n = len(stoneValue)
-        suffix_sum = [0] * (n+1)
-        for i in reversed(range(n)):
-            suffix_sum[i] = suffix_sum[i+1] + stoneValue[i]
         
         dp = [0] * (n+1)
         for i in reversed(range(n)):
-            dp[i] = stoneValue[i] + suffix_sum[i+1] - dp[i+1]
-            for k in range(i+1, min(n, i+3)):
-                dp[i] = max(dp[i], suffix_sum[i]-dp[k+1])
+            dp[i] = float('-inf')
+            take = 0
+            for k in range(i, min(n, i+3)):
+                take += stoneValue[k]
+                dp[i] = max(dp[i], take - dp[k+1])
         
-        if dp[0] *2 == suffix_sum[0]:
-            return "Tie"
-        elif dp[0] * 2 > suffix_sum[0]:
+        if dp[0] > 0:
             return "Alice"
-        else:
+        elif dp[0] < 0:
             return "Bob"
+        return "Tie"
