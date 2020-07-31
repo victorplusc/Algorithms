@@ -46,22 +46,25 @@ n == grid[i].length
 # Space complexity: O(N*M)
 class Solution:
     def minCost(self, grid: List[List[int]]) -> int:
-        n, m, inf, k = len(grid), len(grid[0]), float('inf'), 0
-        
-        dp = [[inf]*m for _ in range(n)]
-        
-        directions = [[0, 1], [0, -1], [1, 0], [-1, 0]]
-        bfs = []
-        
+        n, m = len(grid), len(grid[0])
+        dp = [[float('inf')] * m for i in range(n)]
+        dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]]
+    
+        k = 0
         def dfs(x, y):
-            if x < 0 or y < 0 or x >= n or y >= m or dp[x][y] != inf: return
+            if not (0 <= x < n and 0 <= y < m and dp[x][y] == float('inf')): 
+                return
             dp[x][y] = k
-            bfs.append([x, y])
-            dfs(x+directions[grid[x][y] - 1][0], y + directions[grid[x][y]-1][1])
-        
+            q.append([x, y])
+            dfs(x + dirs[grid[x][y] - 1][0], y + dirs[grid[x][y] - 1][1])
+        q = collections.deque([])
         dfs(0, 0)
-        while bfs:
+        
+        while q:
             k += 1
-            bfs, bfs2 = [], bfs
-            [dfs(x+i, y+j) for x, y in bfs2 for i, j in directions]
+            size = len(q)
+            for _ in range(size):
+                x, y = q.popleft()
+                for i, j in dirs:
+                    dfs(x+i, y+j)
         return dp[-1][-1]
