@@ -24,6 +24,8 @@ Example 4:
 Input: s = "abc3[cd]xyz"
 Output: "abccdcdcdxyz"
 """
+# Time complexity: O(N)
+# Space complexity: O(N)
 class Solution:
     def decodeString(self, s: str) -> str:
         stack = []
