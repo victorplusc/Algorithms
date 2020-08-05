@@ -32,12 +32,10 @@ class Solution:
         curr, num = "", 0
         for c in s:
             if c == "[":
-                stack.append(curr)
-                stack.append(num)
+                stack.append((curr, num))
                 curr, num = "", 0
             elif c == "]":
-                prev_num = stack.pop()
-                prev_s = stack.pop()
+                prev_s, prev_num = stack.pop()
                 curr = prev_s + prev_num*curr
             elif c.isdigit():
                 num = num*10 + int(c)
