@@ -6,17 +6,12 @@ import random
 import re
 import sys
 
-# Complete the quickestWayUp function below.
 import collections
+# Complete the quickestWayUp function below.
 def quickestWayUp(ladders, snakes):
-    """
-    The quickestWayUp function ishould return an integer that represents the minimum number of moves required.
-    ladders: a 2D integer array where each contains the start and end cell numbers of a ladder
-    snakes: a 2D integer array where each contains the start and end cell numbers of a snake
-    """
     ladders = {ladders[i][0]: ladders[i][1] for i in range(len(ladders))}
     snakes = {snakes[i][0]: snakes[i][1] for i in range(len(snakes))}
-    q = collections.deque([[0, 0]])
+    q = collections.deque([[1, 0]])
     visited = set()
     
     while q:
@@ -34,7 +29,7 @@ def quickestWayUp(ladders, snakes):
                 q.append([loc+i, depth+1])
 
     return -1
-    
+
 if __name__ == '__main__':
     fptr = open(os.environ['OUTPUT_PATH'], 'w')
 
