@@ -4,7 +4,6 @@ Given an array A of non-negative integers, return an array consisting of all the
 
 You may return any answer array that satisfies this condition.
 """
-
 class Solution:
     def sortArrayByParity(self, A):
         """
@@ -12,6 +11,11 @@ class Solution:
         :rtype: List[int]
         """
         
-        parityArray = [i for i in A if i%2==0] + [i for i in A if i%2!=0]
-        
-        return parityArray
+        i, j = 0, len(A)-1
+        while i < j:
+            if A[i] % 2 and not A[j] % 2:
+                A[i], A[j] = A[j], A[i]
+            
+            if A[i] % 2 == 0: i += 1
+            if A[j]%2 == 1: j -= 1
+        return A
