@@ -22,63 +22,20 @@ Output: -1
 # Space complexity: O(1)
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
-        return self.naive(nums, target)
-        return self.modified_bin_search(nums, target)
-        return self.inf_bin_search(nums, target)
-
-    def naive(self, nums, target):
         n = len(nums)
-        left, right = 0, n-1
-        while left < right:
-            mid = (left+right)//2
-            if nums[mid] > nums[right]:
-                left = mid + 1
-            else:
-                right = mid
-        pivot = left
-        left, right = 0, n-1
-        while left <= right:
-            mid = (left+right)//2
-            actual_mid = (mid+pivot)%n
-            if nums[actual_mid] == target:
-                return actual_mid
-            elif nums[actual_mid] < target:
-                left = mid + 1
-            else:
-                right = mid - 1
-        return -1
-    
-    def modified_bin_search(self, nums, target):
-        left, right = 0, len(nums)-1
-        while left <= right:
-            mid = (left+right)//2
+        start, end = 0, n-1
+        while start <= end:
+            mid = (start+end)//2
             if nums[mid] == target:
                 return mid
-            elif nums[left] <= nums[mid]:
-                if nums[left] <= target < nums[mid]:
-                    right = mid - 1
-                else:
-                    left = mid + 1
-            else: # nums[mid] < nums[left]
-                if nums[mid] < target <= nums[right]:
-                    left = mid + 1
-                else:
-                    right = mid - 1
-        return -1
-    
-    def inf_bin_search(self, nums, target):
-        left, right = 0, len(nums)-1
-        
-        while left < right:
-            mid = (left+right)//2
-            n = nums[mid]
-            if (nums[mid] < nums[0]) != (target < nums[0]):
-                n = -float('inf') if target < nums[0] else float('inf')
-            if n < target:
-                left = mid + 1
-            elif n > target:
-                right = mid
-            else:
-                return mid
-
+            elif nums[mid] >= nums[0]:
+                if target >= nums[0] and target < nums[mid]:
+                    end = mid-1
+                else: #target < nums[0] or target > nums[mid]
+                    start = mid+1
+            else: #nums[mid] < nums[0]
+                if target <= nums[-1] and target > nums[mid]:
+                    start = mid + 1
+                else: #target > nums[-1] or target < nums[mid]
+                    end = mid - 1
         return -1
