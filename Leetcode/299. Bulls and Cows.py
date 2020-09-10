@@ -25,30 +25,21 @@ Note: You may assume that the secret number and your friend's guess only contain
 
 # Time complexity: O(N)
 # Space complexity: O(1)
-class Solution(object):
-    def getHint(self, secret, guess):
-        """
-        :type secret: str
-        :type guess: str
-        :rtype: str
-        """
+class Solution:
+    def getHint(self, secret: str, guess: str) -> str:
+        secret_vals = collections.Counter()
+        guess_vals = collections.Counter()
         bulls = 0
-        cows = 0
-        secret_nums = [0 for _ in range(10)]
-        guess_nums = [0 for _ in range(10)]
         
-        for i, v in enumerate(secret):
-            if v == guess[i]: 
+        for i, (c1, c2) in enumerate(zip(secret, guess)):
+            if c1 == c2:
                 bulls += 1
-                continue
-            
-            secret_idx = int(secret[i])
-            guess_idx = int(guess[i])
-            
-            secret_nums[secret_idx] += 1
-            guess_nums[guess_idx] += 1
-        
-        for i in range(10):
-            cows += min(secret_nums[i], guess_nums[i])
-                    
-        return str(bulls)+"A"+str(cows)+"B"
+            else:
+                secret_vals[c1] += 1
+                guess_vals[c2] += 1
+                
+        cows = 0
+        for val in guess_vals:
+            cows += min(guess_vals[val], secret_vals[val])
+              
+        return "{0}A{1}B".format(bulls, cows)
