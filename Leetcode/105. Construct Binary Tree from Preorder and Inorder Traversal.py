@@ -28,19 +28,20 @@ Return the following binary tree:
 # Space complexity: O(N)
 class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> TreeNode:
-        order = {v:i for i, v in enumerate(inorder)}
-        return self.helper(preorder, 0, inorder, 0, len(inorder)-1, order)
+        def helper(left=0, right=len(inorder)):
+            nonlocal pre_idx
+            if left == right:
+                return None
+            
+            val = preorder[pre_idx]
+            root = TreeNode(val)
+            
+            idx = idx_map[val]
+            pre_idx += 1
+            root.left = helper(left, idx)
+            root.right = helper(idx+1, right)
+            return root
 
-    def helper(self, preorder, pre_start, inorder, in_start, in_end, order):
-        if in_start > in_end:
-            return None
-        if in_start == in_end:
-            return TreeNode(inorder[in_start])
-        root_val = preorder[pre_start]
-        in_order_idx = order[root_val]
-        root = TreeNode(root_val)
-        left_count = in_order_idx - in_start
-        right_count = in_end - in_order_idx
-        root.left = self.helper(preorder, pre_start+1, inorder, in_start, in_order_idx-1, order)
-        root.right = self.helper(preorder, pre_start+left_count+1, inorder, in_order_idx+1, in_end, order)
-        return root
+        pre_idx = 0
+        idx_map = {val: i for i, val in enumerate(inorder)}
+        return helper()
