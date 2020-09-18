@@ -1,4 +1,4 @@
-def inorderTraversal(self, root):
+def inorderTraversal(root):
     stack = []
     traversal = []
 
