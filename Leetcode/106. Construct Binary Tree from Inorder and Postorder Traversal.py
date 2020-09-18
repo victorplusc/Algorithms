@@ -27,17 +27,15 @@ Return the following binary tree:
 # Space complexity: O(N)
 class Solution:
     def buildTree(self, inorder: List[int], postorder: List[int]) -> TreeNode:
-        def helper(in_left, in_right):
-            if in_left > in_right:
+        def helper(left, right):
+            if left > right:
                 return None
-            
             val = postorder.pop()
             root = TreeNode(val)
-            
             idx = idx_map[val]
-            root.right = helper(idx+1, in_right)
-            root.left = helper(in_left, idx-1)
+            root.right = helper(idx+1, right)
+            root.left = helper(left, idx-1)
             return root
         
-        idx_map = {val:idx for idx, val in enumerate(inorder)}
+        idx_map = {val:i for i, val in enumerate(inorder)}
         return helper(0, len(inorder)-1)
