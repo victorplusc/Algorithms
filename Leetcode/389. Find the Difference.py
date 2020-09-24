@@ -19,14 +19,14 @@ Explanation:
 'e' is the letter that was added.
 """
 # Time complexity: O(N)
-# Space complexity: O(N)
-import collections
+# Space complexity: O(1)
 class Solution:
     def findTheDifference(self, s: str, t: str) -> str:
-        s_count = collections.Counter(s)
-        t_count = collections.Counter(t)
-        for v in t_count:
-            if v not in s_count or t_count[v] > s_count[v]:
-                return v
-
-                
+        s_sum = 0
+        t_sum = ord(t[-1])
+        
+        for c1, c2 in zip(s, t):
+            s_sum += ord(c1)
+            t_sum += ord(c2)
+        
+        return chr(t_sum-s_sum)
