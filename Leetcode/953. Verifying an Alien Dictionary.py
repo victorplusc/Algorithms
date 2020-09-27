@@ -31,17 +31,21 @@ class Solution:
     def isAlienSorted(self, words: List[str], order: str) -> bool:
         dictionary = {c:i for i, c in enumerate(order)}
         
-        for i in range(len(words)-1):
-            word1 = words[i]
-            word2 = words[i+1]
+        def valid_order(word1, word2):
             diff = False
-            for j in range(min(len(word1), len(word2))):
-                if word1[j] != word2[j]:
-                    if dictionary[word1[j]] > dictionary[word2[j]]:
+            for i in range(min(len(word1), len(word2))):
+                if word1[i] != word2[i]:
+                    if dictionary[word1[i]] > dictionary[word2[i]]:
                         return False
                     diff = True
                     break
-
-            if not diff and len(word1) > len(word2): return False
-                    
-        return True
+            if not diff and len(word1) > len(word2):
+                return False
+            return True
+        
+        valid = True
+        for i in range(len(words)-1):
+            valid &= valid_order(words[i], words[i+1])
+            if not valid:
+                break
+        return valid
