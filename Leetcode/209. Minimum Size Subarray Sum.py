@@ -17,18 +17,16 @@ class Solution:
         if not nums:
             return 0
         
-        min_len = float('inf')
-        rolling_sum = 0
+        best = float('inf')
+        
         i = 0
+        window_sum = 0
         
         for j in range(len(nums)):
-            rolling_sum += nums[j]
-            
-            while rolling_sum - nums[i] >= s:
-                rolling_sum -= nums[i]
+            window_sum += nums[j]
+            while window_sum >= s:
+                best = min(best, j-i+1)
+                window_sum -= nums[i]
                 i += 1
-                
-            if rolling_sum >= s:
-                min_len = min(min_len, j-i+1)
-        
-        return min_len if not min_len == float('inf') else 0
+            
+        return best if best != float('inf') else 0
