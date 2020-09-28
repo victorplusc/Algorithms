@@ -34,13 +34,13 @@ class Solution:
         if K >= len(points):
             return points
         
-        heap = [(-self.modified_euclidean(points[i]), points[i]) for i in range(K)]
+        def distance(point):
+            x, y = point
+            return x**2 + y**2
+        
+        heap = [(-distance(points[i]), points[i]) for i in range(K)]
         heapq.heapify(heap)
         for i in range(K, len(points)):
-            heapq.heappushpop(heap, (-self.modified_euclidean(points[i]), points[i]))
-        return [point for d, point in heap]
-    
-    def modified_euclidean(self, point):
-        x = point[0]
-        y = point[1]
-        return y**2+x**2
+            heapq.heappushpop(heap, (-distance(points[i]), points[i]))
+        
+        return [point for dist, point in heap]
