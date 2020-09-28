@@ -11,16 +11,15 @@ class Solution:
 
 # Time complexity: O(N)
 # Space complexity: O(N)
+class Solution:
     def subarraySum(self, nums: List[int], k: int) -> int:
-        count = {0 : 1}
-        curr = 0
-        total = 0
-        
+        total = curr_sum = 0
+        mapping = collections.defaultdict(int)
+        mapping[0] = 1
         for num in nums:
-            curr += num
-            total += count.get(curr - k, 0)
-            count[curr] = count.get(curr, 0) + 1
-        
+            curr_sum += num
+            total += mapping[curr_sum-k]
+            mapping[curr_sum] += 1
         return total
 
 # Time complexity: O(N**2)
