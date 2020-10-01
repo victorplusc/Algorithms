@@ -16,11 +16,18 @@ The string will only contain lowercase characters a-z. The maximum length of the
 # Space complexity: O(1)
 class Solution:
     def validPalindrome(self, s: str) -> bool:
-        for i in range(len(s)//2):
+        def is_palin(i, j):
+            while i < j:
+                if s[i] != s[j]:
+                    return False
+                i += 1
+                j -= 1
+            return True
+        
+        n = len(s)
+        
+        for i in range(n):
             if s[i] != s[~i]:
-                j = len(s) - 1 - i
-                return self.valid_palin_range(s, i+1, j) or self.valid_palin_range(s, i, j-1)
+                return is_palin(i+1, n-1-i) or is_palin(i, n-2-i)
+            
         return True
-    
-    def valid_palin_range(self, s, i, j):
-        return all(s[k] == s[j-k+i] for k in range(i, j))
