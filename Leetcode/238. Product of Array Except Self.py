@@ -39,14 +39,14 @@ class Solution:
     # Space complexity: O(1)
     def productExceptSelf(self, nums: List[int]) -> List[int]:
         n = len(nums)
-        prods = [0 for _ in range(n)]
-        prods[0] = 1
+        output = [1] * n
+        
         for i in range(1, n):
-            prods[i] = nums[i-1] * prods[i-1]
+            output[i] = output[i-1] * nums[i-1]
+            
+        right_prod = 1
+        for i in reversed(range(n)):
+            output[i] *= right_prod
+            right_prod *= nums[i]
         
-        right = 1
-        for i in range(n):
-            prods[-1-i] *= right
-            right *= nums[-1-i]
-        
-        return prods
+        return output
