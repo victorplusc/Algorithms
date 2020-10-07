@@ -12,19 +12,14 @@ Note that there may exist multiple valid ways for the insertion, as long as the 
 #         self.left = None
 #         self.right = None
 
-class Solution(object):
-    def insertIntoBST(self, root, val):
-        """
-        :type root: TreeNode
-        :type val: int
-        :rtype: TreeNode
-        """
-        if root == None:
+class Solution:
+    def insertIntoBST(self, root: TreeNode, val: int) -> TreeNode:
+        if not root:
             return TreeNode(val)
         
-        if val > root.val:
-            root.right = self.insertIntoBST(root.right, val)
-        else: # val < root.val
+        if root.val > val:
             root.left = self.insertIntoBST(root.left, val)
+        else:
+            root.right = self.insertIntoBST(root.right, val)
             
         return root
