@@ -12,28 +12,17 @@ The binary search tree is guaranteed to have unique values.
 #         self.left = None
 #         self.right = None
 
-class Solution(object):
+class Solution:
     def rangeSumBST(self, root, L, R):
-        """
-        :type root: TreeNode
-        :type L: int
-        :type R: int
-        :rtype: int
-        """
-    
-        return self.helper(root, L, R)
-    
-    def helper(self, root, L, R):
-        sum = 0
-        
-        if root == None:
+        if not root:
             return 0
         
+        total = 0
+        if root.val > L:
+            total += self.rangeSumBST(root.left, L, R)
+        if root.val < R:
+            total += self.rangeSumBST(root.right, L, R)
         if L <= root.val <= R:
-            sum += root.val
-        if L < root.val:
-            sum += self.helper(root.left, L, R)
-        if R > root.val:
-            sum += self.helper(root.right, L, R)
+            total += root.val
         
-        return sum
+        return total
