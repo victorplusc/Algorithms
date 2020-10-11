@@ -1,5 +1,5 @@
 # Time complexity: O(N log K)
-# Space complexity: O(N)
+# Space complexity: O(K)
 class Solution:
     def findKthLargest(self, nums: List[int], k: int) -> int:
         heap = nums[:k]
