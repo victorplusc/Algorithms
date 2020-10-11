@@ -1,20 +1,11 @@
 # Time complexity: O(Nlog N)
 # Space complexity: O(N)
-# Unoptimized
-import heapq
-class Solution(object):
-    def findKthLargest(self, nums, k):
-        """
-        :type nums: List[int]
-        :type k: int
-        :rtype: int
-        """
-        max_heap = []
+class Solution:
+    def findKthLargest(self, nums: List[int], k: int) -> int:
+        heap = nums[:k]
+        heapq.heapify(heap)
         
-        for i in nums:
-            heapq.heappush(max_heap, -i)
+        for num in nums[k:]:
+            heapq.heappushpop(heap, num)
         
-        for i in range(k-1):
-            heapq.heappop(max_heap)
-        
-        return -heapq.heappop(max_heap)
+        return heap[0]
