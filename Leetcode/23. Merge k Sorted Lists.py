@@ -11,30 +11,17 @@ Merge k sorted linked lists and return it as one sorted list. Analyze and descri
 
 # Time complexity: O(N log k), where N is the length of the final list and k is the number of lists
 # Space complexiy: O(k)
-
-import heapq
-
 class Solution:
     def mergeKLists(self, lists: List[ListNode]) -> ListNode:
-        min_heap = []
-        list_pointers = [node for node in lists]
-        node_mapping = {}
-        
-        for i, node in enumerate(list_pointers):
-            if node:
-                node_mapping[i] = node
-                heapq.heappush(min_heap, (node.val, i))
-                
-        head_node = ListNode(None)
-        curr_node = head_node
-        while min_heap:
-            smallest_v, smallest_node_i = heapq.heappop(min_heap)
-            smallest_node = node_mapping[smallest_node_i]
-            curr_node.next = ListNode(smallest_v)
-            curr_node = curr_node.next
-            smallest_node = smallest_node.next
-            if smallest_node != None:
-                node_mapping[smallest_node_i] = smallest_node
-                heapq.heappush(min_heap, (smallest_node.val, smallest_node_i))
-        
-        return head_node.next
+        heap = [(node.val, i, node) for i, node in enumerate(lists) if node]
+        heapq.heapify(heap)
+        dummy = ListNode(0)
+        curr = dummy
+        while heap:
+            val, i, node = heapq.heappop(heap)
+            if node.next:
+                # recycling i guarantees uniqueness against tie-breaker in heapq when two node values are the same
+                heapq.heappush(heap, (node.next.val, i, node.next)) 
+            curr.next = node
+            curr = curr.next
+        return dummy.next
