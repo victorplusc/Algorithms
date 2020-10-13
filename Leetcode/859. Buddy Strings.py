@@ -1,34 +1,62 @@
 """
-Given two strings A and B of lowercase letters, return true if and only if we can swap two letters in A so that the result equals B.
-"""
+859. Buddy Strings
+Given two strings A and B of lowercase letters, return true if you can swap two letters in A so the result is equal to B, otherwise, return false.
 
+Swapping letters is defined as taking two indices i and j (0-indexed) such that i != j and swapping the characters at A[i] and A[j]. For example, swapping at indices 0 and 2 in "abcd" results in "cbad".
+
+Example 1:
+Input: A = "ab", B = "ba"
+Output: true
+Explanation: You can swap A[0] = 'a' and A[1] = 'b' to get "ba", which is equal to B.
+
+Example 2:
+Input: A = "ab", B = "ab"
+Output: false
+Explanation: The only letters you can swap are A[0] = 'a' and A[1] = 'b', which results in "ba" != B.
+
+Example 3:
+Input: A = "aa", B = "aa"
+Output: true
+Explanation: You can swap A[0] = 'a' and A[1] = 'a' to get "aa", which is equal to B.
+
+Example 4:
+Input: A = "aaaaaaabc", B = "aaaaaaacb"
+Output: true
+
+Example 5:
+Input: A = "", B = "aa"
+Output: false
+
+Constraints:
+0 <= A.length <= 20000
+0 <= B.length <= 20000
+A and B consist of lowercase letters.
+"""
+# Time complexity: O(N)
+# Space complexity: O(1) if unique chars are bounded
 class Solution:
     def buddyStrings(self, A: str, B: str) -> bool:
-        
         if len(A) != len(B):
             return False
+        first = -1
+        second = -1
         
-        if A == B:
-            a_set = set()
-            for char in A:
-                if char in a_set:
-                    return True
-                else:
-                    a_set.add(char)
-            return False
-            
-        diff_a = None
-        diff_b = None
-        
+        A_vals = set()
+        contains_dupe = False
         for i in range(len(A)):
-            
+            if A[i] in A_vals:
+                contains_dupe = True
+            A_vals.add(A[i])
             if A[i] != B[i]:
-                
-                if diff_a == None:
-                    diff_a = A[i]
-                    diff_b = B[i]
-                elif diff_a != None:
-                    if diff_b != A[i] or diff_a != B[i]:
-                        return False
+                if first == -1:
+                    first = i
+                elif second == -1:
+                    second = i
+                else:
+                    return False
         
-        return True
+        if first != -1 and second != -1 and A[first] == B[second] and B[first] == A[second]:
+            return True
+        elif first == -1 and second == -1 and contains_dupe:
+            return True
+        return False
