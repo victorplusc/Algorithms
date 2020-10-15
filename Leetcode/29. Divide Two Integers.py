@@ -44,8 +44,8 @@ class Solution:
             while dividend >= temp:
                 dividend -= temp
                 res += i
-                i *= 2 # i <<= 1
-                temp *= 2 # temp <<= 1
+                i <<= 1 # i *= 2 
+                temp <<= 1 # temp *= 2
         return min(res if pos else -res, 2147483647)
     
 """
