@@ -21,15 +21,14 @@ Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3).
 # Space complexity: O(1)
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        return max(self.rob_helper(nums, 0, len(nums)-1), self.rob_helper(nums, 1, len(nums)))
-    
-    def rob_helper(self, nums, start, end):
-        if len(nums) == 1:
-            return nums[0]
-        prev = 0
-        curr = 0
-        for i in range(start, end):
-            temp = curr
-            curr = max(curr, prev+nums[i])
-            prev = temp
-        return curr
+        def helper(start, end):
+            if len(nums) == 1:
+                return nums[0]
+            
+            prev = 0
+            curr = 0
+            for i in range(start, end):
+                curr, prev = max(curr, prev+nums[i]), curr
+            return curr
+        
+        return max(helper(0, len(nums)-1), helper(1, len(nums)))
