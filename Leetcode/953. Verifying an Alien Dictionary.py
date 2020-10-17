@@ -27,6 +27,21 @@ All characters in words[i] and order are english lowercase letters.
 """
 # Time complexity: O(N*k), where N is the length of the input array, and k is the length of each word.
 # Space complexity: O(1)
+"""
+Check for:
+1. Different characters, check the order of the two characters
+2. Proper lengths, i.e. if no differences occur, word1 should never be longer than word2
+
+Algorithm:
+1) Enumerate the order in a hashmap, higher value implies farther down in the alphabet
+2) Iterate through the range of minimal length between two words
+3) If word1[i] != word2[i]:
+    i) if the word[i] in dict > word2[i] in dict, return False immediately
+    ii) record a difference and break
+4) If there is no difference and length of word1 > len(word2): False
+5) the order of the two words is valid
+6) repeat for all words
+"""
 class Solution:
     def isAlienSorted(self, words: List[str], order: str) -> bool:
         dictionary = {c:i for i, c in enumerate(order)}
@@ -43,9 +58,4 @@ class Solution:
                 return False
             return True
         
-        valid = True
-        for i in range(len(words)-1):
-            valid &= valid_order(words[i], words[i+1])
-            if not valid:
-                break
-        return valid
+        return all(valid_order(words[i], words[i+1]) for i in range(len(words)-1))
