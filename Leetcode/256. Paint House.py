@@ -87,4 +87,19 @@ class Solution:
             current_row[2] += min(previous_row[0], previous_row[1])
             previous_row = current_row
         return min(previous_row)
-    
+
+# Original
+# Time complexity: O(N)
+# Space complexity: O(N)
+class Solution:
+    def minCost(self, costs: List[List[int]]) -> int:
+        n = len(costs)
+        dp = [[0]*3 for _ in range(n)]
+        # dp[i][j], where i is the house and j is the color
+
+        dp[0] = costs[0][:]        
+        for i in range(1, n):
+            for j in range(3):
+                dp[i][j] = min(dp[i-1][(j+1)%3], dp[i-1][(j+2)%3]) + costs[i][j]
+
+        return min(dp[-1])
