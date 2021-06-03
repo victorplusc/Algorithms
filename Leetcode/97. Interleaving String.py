@@ -29,10 +29,10 @@ s1, s2, and s3 consist of lowercase English letters.
 
 Follow up: Could you solve it using only O(s2.length) additional memory space?
 """
-# Time complexity: O(N*M)
-# Space complexity: O(N*M)
 class Solution:
-    def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
+    # Time complexity: O(N*M)
+    # Space complexity: O(N*M)
+    def isInterleaveDP(self, s1: str, s2: str, s3: str) -> bool:
         n, m, k = len(s1), len(s2), len(s3)
         if n+m != k:
             return False
@@ -52,3 +52,26 @@ class Solution:
                 dp[i][j] = dp[i-1][j] and s1[i-1] == s3[i+j-1] or \
                 dp[i][j-1] and s2[j-1] == s3[i+j-1]
         return dp[-1][-1]
+    
+    # BFS
+    # Time complexity: O(N*M)
+    # Space complexity: O(N*M)
+    def isInterleave(self, s1: str, s2: str, s3: str) -> bool:
+        n, m, k = len(s1), len(s2), len(s3)
+        if n+m != k:
+            return False
+        
+        q = collections.deque([(0, 0)])
+        visited = {(0, 0)}
+        
+        while q:
+            x, y = q.popleft()
+            if x+y == k:
+                return True
+            if y+1 <= n and s1[y] == s3[x+y] and (x, y+1) not in visited:
+                q.append((x, y+1))
+                visited.add((x, y+1))
+            if x+1 <= m and s2[x] == s3[x+y] and (x+1, y) not in visited:
+                q.append((x+1, y))
+                visited.add((x+1, y))
+        return False
