@@ -1,33 +1,42 @@
-# 205. Isomorphic Strings
+"""
+205. Isomorphic Strings
+Given two strings s and t, determine if they are isomorphic.
 
-class Solution:
-    def isIsomorphic(self, s: str, t: str) -> bool:
-        
-        if len(s) != len(t):
-            return False
-        elif len(s) == 1:
-            return True
-        
-        mapping_s = {}
-        mapping_t = {}
-        
-        for i in range(len(s)):
-            
-            if s[i] not in mapping_s:
-                mapping_s[s[i]] = t[i]
-            
-            if t[i] not in mapping_t:
-                mapping_t[t[i]] = s[i]
-            
-            if s[i] in mapping_s:
-                if mapping_t[t[i]] != s[i]:
-                    return False
-                
-            if t[i] in mapping_t:
-                if mapping_s[s[i]] != t[i]:
-                    return False
-                
-        return True
-        
+Two strings s and t are isomorphic if the characters in s can be replaced to get t.
+
+All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character, but a character may map to itself.
+
+Example 1:
+Input: s = "egg", t = "add"
+Output: true
+
+Example 2:
+Input: s = "foo", t = "bar"
+Output: false
+
+Example 3:
+Input: s = "paper", t = "title"
+Output: true
+
+Constraints:
+1 <= s.length <= 5 * 104
+t.length == s.length
+s and t consist of any valid ascii character.
+"""
 # Time complexity: O(N)
 # Space complexity: O(N)
+class Solution:
+    def isIsomorphic(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+        
+        s_t_map = {}
+        t_s_map = {}
+        for i in range(len(s)):
+            if s[i] not in s_t_map and t[i] not in t_s_map:
+                s_t_map[s[i]] = t[i]
+                t_s_map[t[i]] = s[i]
+            elif s_t_map.get(s[i]) != t[i] or t_s_map.get(t[i]) != s[i]:
+                return False
+            
+        return True
