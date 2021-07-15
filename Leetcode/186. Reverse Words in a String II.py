@@ -22,22 +22,21 @@ class Solution:
         """
         Do not return anything, modify s in-place instead.
         """
-        self.reverse_word(s, 0, len(s)-1)
-        start = 0
-        
-        for end in range(len(s)):
-            if s[end] == " ":
-                self.reverse_word(s, start, end - 1)
-                start = end + 1
-            elif end == len(s)-1:
-                self.reverse_word(s, start, end)
+        def reverse_partial(left, right):
+            while left < right:
+                s[left], s[right] = s[right], s[left]
+                left += 1
+                right -= 1
                 
-        
-    def reverse_word(self, s, start, end):
-        while start < end:
-            s[start], s[end] = s[end], s[start]
-            start += 1
-            end -= 1
+        reverse_partial(0, len(s)-1)
+        i = 0
+        for j in range(len(s)):
+            if s[j] == " ":
+                reverse_partial(i, j-1)
+                
+                i = j+1
+        reverse_partial(i, len(s)-1)
+    
         
         
         
