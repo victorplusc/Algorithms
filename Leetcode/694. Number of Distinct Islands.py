@@ -31,48 +31,31 @@ Note: The length of each dimension in the given grid does not exceed 50.
 # Space complexity: O(N*M)
 class Solution:
     def numDistinctIslands(self, grid: List[List[int]]) -> int:
-        return self.shape_hash(grid)
-        return self.path_hash(grid)
-    
-    def path_hash(self, grid):
-        seen = set()
-        def dfs(y, x, di):
-            if 0 <= y < len(grid) and 0 <= x < len(grid[0]) and grid[y][x] and (y, x) not in seen:
-                seen.add((y, x))
-                shape.append(di)
-                dfs(y+1, x, 1)
-                dfs(y-1, x, 2)
-                dfs(y, x+1, 3)
-                dfs(y, x-1, 4)
-                shape.append(0)
-        
-        shapes = set()
-        for y in range(len(grid)):
-            for x in range(len(grid[0])):
-                if grid[y][x] == 1:
-                    shape = []
-                    dfs(y, x, 0)
-                    if shape:
-                        shapes.add(tuple(shape))
-        return len(shapes)
-    
-    def shape_hash(self, grid):
-        seen = set()
-        def dfs(y, x, y0, x0):
-            if 0 <= y < len(grid) and 0 <= x < len(grid[0]) and grid[y][x] and (y, x) not in seen:
-                seen.add((y, x))
-                shape.add((y-y0, x-x0))
-                dfs(y+1, x, y0, x0)
-                dfs(y-1, x, y0, x0)
-                dfs(y, x+1, y0, x0)
-                dfs(y, x-1, y0, x0)
-        
-        shapes = set()
-        for y in range(len(grid)):
-            for x in range(len(grid[0])):
-                if grid[y][x] == 1:
-                    shape = set()
-                    dfs(y, x, y, x)
-                    if shape:
-                        shapes.add(frozenset(shape))
-        return len(shapes)
+        m = len(grid)
+        n = len(grid[0])
+
+        directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+        def dfs(x, y, x_change=0, y_change=0):
+            nonlocal order
+            if x < 0 or y < 0 or x >= n or y >= m or grid[y][x] != 1:
+                return
+            grid[y][x] = 2 # marks cell as visited
+            order.append((x_change, y_change))
+            order.append(str(x_change)+"y"+str(y_change))
+            for dy, dx in directions:
+                dfs(x+dx, y+dy, x_change+dx, y_change+dy)
+
+        islands = set()
+        for y, row in enumerate(grid):
+            for x, val in enumerate(row):
+                if val == 1:
+                    order = []
+                    dfs(x, y)
+                    islands.add(tuple(order))
+
+        for y, row in enumerate(grid):
+            for x, val in enumerate(row):
+                if val == 2:
+                    grid[y][x] = 1
+
+        return len(islands)
