@@ -1,0 +1,208 @@
+# Implement a nested associative array / map / dictionary type that can also return flattened keys.
+
+"""
+e.g:
+
+{
+    k1 : 1,
+    k2: {
+        k3: 2,
+        k4: {
+            k5: 3
+        }
+    }
+}
+
+flatten() gives:
+k1: 1
+k2.k3: 2
+k2.k4.k5: 3
+
+map["k2.k3"] = 2
+"""
+"""
+Goal:
+-> create a new class/definition that:
+    -> have a central hashmap, that can be nested
+    -> flatten() -> returns the flattened version of every key in the central hashmap
+
+Idea:
+-> recursively DFS down each child
+    -> track the path
+    -> when we reach a leaf, so in this case:
+        -> map[k1] = 1
+        -> leaves are defined as integers
+
+Algorithm:
+-> have a dfs function
+-> call the dfs function when using flatten
+-> take in values/defining values in either the constructor or somewhere else
+"""
+
+class NestedMap():
+    def __init__(self, mapping):
+        self.mapping = mapping
+    
+    def flatten(self):
+        flattened = {}
+        def dfs(mapping, path):
+            for key in mapping:
+                path.append(key)
+                if type(mapping[key]) == int:
+                    flattened[".".join(path)] = mapping[key]
+                else:
+                    dfs(mapping[key], path)
+                path.pop()
+        
+        dfs(self.mapping, [])
+        return flattened
+    
+    
+# mapping = {
+#     "k1" : 1,
+#     "k2": {
+#         "k3": 2,
+#         "k4": {
+#             "k5": 3
+#         }
+#     }
+# }
+# example = NestedMap(mapping)
+# print(example.flatten()) #-> 
+"""
+flatten() gives:
+{
+    k1: 1,
+    k2.k3: 2,
+    k2.k4.k5: 3
+}
+"""
+    
+#################
+
+# Implement a collection type with a fixed size that allows adding elements and removing by element.
+# - no duplicates
+# - size is capped
+
+"""
+Goal/requirement:
+-> create a collection type with a size (n)
+-> when the collection is at max size, we still allow adding
+    -> n = 3, {1, 2, 3}, add(4), -> remove oldest, 
+    -> > add 1, > add 2, > add 3, so remove 1 to fit in 4
+-> when we add a duplicate
+    > n = 3, [1, <3>, 2, <add 3>], add(3),
+
+Idea:
+-> hashmap that maps to doubly linked list nodes
+-> head -> oldest
+-> tail is the youngest
+-> size is tracked
+-> map[3] = head
+-> add 3, delete head first, add a node to the tail, map[3] = tail
+
+Idea #2:
+-> use a deque
+-> [e1, e2, e3, e4] 
+
+General functions:
+
+class DLNode():
+    def __init__(self, val):
+        self.val = val
+        self.next = None
+        self.prev = None
+
+1. _remove_node(node):
+    -> check if it's the head
+        -> in this case, delete map[head.val], head = head.next, head.prev = None
+    -> else
+        -> delete map[node.val], node.prev.next = node.next, node.next.prev = node.prev
+
+2. _add_to_tail(val):
+    if val in <mapping>:
+        remove_node(map[val])
+    
+    map[val] = DLNode(val)
+    tail.next = map[val]
+    tail.next.prev = tail
+    tail = tail.next
+    
+    if <size> > <max_size>:
+        -> _remove_node(head)
+"""
+    
+class DLNode():
+    def __init__(self, val):
+        self.val = val
+        self.next = None
+        self.prev = None
+
+class FixedSet():
+    def __init__(self, max_size):
+        self.mapping = {}
+        self.size = 0
+        self.max_size = max_size
+        self.head = None
+        self.tail = None
+    
+    def add(self, val):
+        if val in self.mapping:
+            if self.mapping[val] == self.tail:
+                return
+            
+            self.remove_node(self.mapping[val])
+            self.size -= 1
+            
+        self.size += 1
+        self.mapping[val] = DLNode(val)
+        node = self.mapping[val]
+        
+        if not self.head and not self.tail:
+            self.head = node
+            self.tail = node
+            self.head.next = self.tail
+            self.tail.prev = self.head
+        else:
+            self.tail.next = node
+            node.prev = self.tail
+            self.tail = self.tail.next
+        
+        if self.size > self.max_size:
+            self.remove_node(self.head)
+
+    def remove_node(self, node):
+        if node == self.head:
+            del self.mapping[self.head.val]
+            self.head = self.head.next
+            self.head.prev = None
+        else:
+            del self.mapping[node.val]
+            node.prev.next = node.next
+            node.next.prev = node.prev
+            
+    def print_values(self):
+        # for key in self.mapping:
+        #     print(self.mapping[key].val)
+        curr = self.head
+        while curr:
+            print(curr.val)
+            curr = curr.next
+        
+    
+example2 = FixedSet(3)
+example2.add(1)
+example2.add(2)
+example2.add(3)
+example2.add(4)
+
+example2.print_values()
+
+print("___")
+example2 = FixedSet(3)
+example2.add(1)
+example2.add(2)
+example2.add(3)
+example2.add(2)
+
+example2.print_values()
