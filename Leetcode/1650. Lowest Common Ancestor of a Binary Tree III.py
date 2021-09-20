@@ -42,9 +42,9 @@ class Node:
         self.right = None
         self.parent = None
 """
-# Time complexity: O(H)
-# Space complexity: O(H)
 class Solution:
+    # Time complexity: O(H)
+    # Space complexity: O(H)
     def lowestCommonAncestor(self, p: 'Node', q: 'Node') -> 'Node':
         p_path = set()
         curr = p
@@ -59,3 +59,18 @@ class Solution:
             q = q.parent
         
         return q
+
+    """
+    /*
+    P ------o---    1 + 2:  ------o-----o---
+    Q     --o---    2 + 1:  --o---------o--- 
+    */
+    """
+    # Time complexity: O(H)
+    # Space complexity: O(H)
+    def lowestCommonAncestor(self, p: 'Node', q: 'Node') -> 'Node':
+        p1, p2 = p, q
+        while p1 != p2:
+            p1 = p1.parent if p1.parent else q
+            p2 = p2.parent if p2.parent else p
+        return p1
